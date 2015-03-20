@@ -1,0 +1,405 @@
+$line-thickness: 3px;
+body {
+    background-color: #f7f7f7;
+}
+//
+// Helper
+// --------------------------------------------------
+//override bootstrap rounded corners
+.form-control,
+.input-group-addon,
+.btn {
+    border-radius: 0px;
+}
+
+.footer {
+    text-align: center;
+    padding: 30px 0;
+    margin-top: 70px;
+    border-top: 1px solid $app-gray-very-light;
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.spinner {
+    position:relative;
+    margin: 0 auto;
+    display: block;
+    -webkit-animation: rotation .6s infinite linear;
+    -moz-animation: rotation .6s infinite linear;
+    animation: rotation .6s infinite linear;
+
+    border-bottom: 4px solid rgba(0,0,0,0.25);
+    border-left: 4px solid rgba(0,0,0,0.25);
+    border-right: 4px solid rgba(0,0,0,0.25);
+    border-top: 4px solid rgba(0,0,0,0.75);
+
+    -moz-border-radius: 100%;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+
+    height: 32px;
+    width: 32px;
+}
+
+.spinner-lg {
+    border-width:5px;
+    height:40px;
+    width:40px;
+}
+
+.spinner-wrapper {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-left: -20px;
+    margin-top: -20px;
+    padding: 20px;
+    z-index: 9999;
+}
+
+@-webkit-keyframes rotation {
+from {-webkit-transform: rotate(0deg);}
+to {-webkit-transform: rotate(359deg);}
+}
+
+@-moz-keyframes rotation {
+from {-moz-transform: rotate(0deg);}
+to {-moz-transform: rotate(359deg);}
+}
+
+@-o-keyframes rotation {
+from {-o-transform: rotate(0deg);}
+to {-o-transform: rotate(359deg);}
+}
+
+@keyframes rotation {
+from {transform: rotate(0deg);}
+to {transform: rotate(359deg);}
+}
+
+// changing opacity of spinner-wrapper without
+// changing the opacity of child element
+.spinner-wrapper:before {
+    content: '';
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    margin-left: -20px;
+    margin-top: -20px;
+    background-color: $app-gray-silver;
+    opacity: 0.5;
+    z-index: -1;
+ }
+
+//
+// Top Work Stream buttons
+// --------------------------------------------------
+.workstream-buttons-wrapper {
+    background-color: $app-gray-very-light;
+    border-top: $app-gray-silver 1px solid;
+    border-bottom: #ffffff 1px solid;
+}
+
+.workstream-button {
+    margin: 4px;
+    background-color: $app-gray-very-very-light;
+    overflow: auto;
+    float: left;
+}
+
+.workstream-button label {
+    float: left;
+    width: auto;
+    margin: 0px;
+}
+
+.workstream-button label span,
+.scale-button span {
+    text-align: center;
+    display: block;
+    padding: 10px 20px;
+}
+
+.workstream-button label input,
+.scale-button input {
+    position: absolute;
+
+    /*hide the checkbox box*/
+    top:-400px;
+}
+
+.workstream-button input:checked + span,
+.all-selected
+{
+ color: #fff;
+}
+
+.workstream-button input.all:checked + span{
+    background-color: $app-gray-darker;
+}
+
+//
+// Time scale buttons
+// --------------------------------------------------
+.scale-buttons-wrapper {
+    text-align: center;
+    margin: 10px 0px;
+    min-width: 690px;
+}
+
+.scale-button span {
+    text-align: center;
+    display: block;
+    padding: 7px 20px;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+
+.scale-button input {
+    position: absolute;
+
+    /*hide the checkbox box*/
+    top:-400px;
+}
+.scale-button input:checked + span{
+    background-color: $app-gray-very-light;
+}
+
+label {
+    margin: 0px;
+    vertical-align: middle;
+}
+
+.btn-arrow {
+    color: #fff;
+    background-color: #000000;
+    border-color: none;
+    outline: none;
+}
+
+.btn-default,
+.btn-default:hover,
+.btn-default:active,
+.btn-default:focus {
+    border: none;
+    outline: none;
+    padding: 7px 15px;
+    background-color: #fff;
+    outline: none;
+    -webkit-appearance:none;
+}
+
+.btn-arrow:hover,
+.btn-arrow:active,
+.btn-arrow:focus {
+    color: #fff;
+    background-color: #000000;
+    border-color: #000000;
+    outline: none;
+}
+
+// remove halo blue effect around buttons
+.btn-default:focus,
+.btn-arrow:focus {
+    -webkit-appearance:none;
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border-color: none !important;
+    outline:0px !important;
+}
+
+//
+// Tasks
+// --------------------------------------------------
+.tasks-wrapper,
+.grid-wrapper {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.tasks-wrapper {
+    background-color: #fff;
+    border-top: $app-gray-silver 1px solid;
+    border-bottom: $app-gray-silver 1px solid;
+    padding-top: 10px;
+
+}
+
+.task-container {
+    position: relative;
+    padding-top: 45px;
+    display: block;
+    vertical-align: middle;
+    position: relative;
+    height: 20px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.task-track {
+    height: 1px;
+    width: 100%;
+    margin-top: -5px;
+    top: 50%;
+    left: 0;
+    position: absolute;
+    background-color: $app-gray-silver;
+}
+
+.task-title-wrapper {
+    height: 30px;
+    margin-top: -15px;
+    top: 0;
+    bottom: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    position: absolute;
+    background-color: $app-gray-very-light;
+    padding: 5px 15px;
+    box-sizing: border-box;
+    color: #fff;
+    z-index: 201;
+}
+
+.end-dev-to-release-line {
+    position: absolute;
+    bottom: -1px;
+    height: $line-thickness;
+    z-index: 20;
+}
+
+.start-dev-point,
+.end-dev-point {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    //cursor: pointer;
+    margin-left: -7.5px;
+    margin-top: -7.5px;
+    border-radius: 10px;
+    border-width: $line-thickness;
+    border-style: solid;
+    background: #fff;
+    z-index: 202;
+}
+
+.release-point {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-width: $line-thickness;
+    border-style: solid;
+    //cursor: pointer;
+    -moz-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+//
+// Timeline
+// --------------------------------------------------
+.header-wrapper {
+    position: relative;
+}
+
+.grid {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    height: 100%;
+}
+
+.grid div {
+    position: absolute;
+    border-left: $app-gray-very-light 1px solid;
+    top: 0px;
+    bottom: 0px;
+}
+
+.month {
+    position: relative;
+    height: 40px;
+    margin-top: 10px;
+}
+
+.month div {
+    font-size: 80%;
+    position: absolute;
+    height: 40px;
+    border-left: $app-gray-very-light 1px solid;
+    padding-left: 5px;
+    top: 0px;
+}
+
+.today {
+    margin-top: -40px;
+    background-color: #0fbaf2;
+    width: 3px;
+    z-index: 500;
+}
+
+.today:before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #0fbaf2;
+    margin-left: -4px;
+    margin-top: -10px;
+    position: absolute;
+}
+
+//
+// Task info box
+// --------------------------------------------------
+.hidden {
+    display: none;
+}
+
+.task-info {
+    top: 0;
+    padding: 15px 0;
+    position: fixed;
+    z-index: 1000;
+    display: block;
+    font-size: 12px;
+    line-height: 14px;
+    visibility: visible;
+}
+
+.task-info .task-info-arrow {
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    border-left: 0px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 15px solid $app-gray;
+}
+
+.task-info .task-info-inner {
+    white-space: normal;
+    max-width: 200px;
+    padding: 8px;
+    color: #fff;
+    text-align: normal;
+    text-decoration: none;
+    background-color: $app-gray;
+    border-radius: 0px;
+}

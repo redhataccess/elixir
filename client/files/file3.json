@@ -1,0 +1,64 @@
+{
+    "name": "Work Stream 3",
+    "color": "#99CCFF",
+    "active": true,
+    "internal": true,
+    "tasks": [
+        {
+            "title": "Task title",
+            "startDate": "2015-01-26",
+            "endDevDate": "2015-02-13",
+            "releaseDate": "2015-02-24",
+            "description": "",
+            "order": 1
+        },
+        {
+            "title": "Task title",
+            "startDate": "2015-01-26",
+            "endDevDate": "2015-02-13",
+            "releaseDate": "2015-02-24",
+            "description": "",
+            "order": 1
+        },
+                {
+            "title": "Task title",
+            "startDate": "2015-01-05",
+            "endDevDate": "2015-01-23",
+            "releaseDate": "2015-02-07",
+            "description": "",
+            "order": 1
+        },
+        {
+            "title": "Task title",
+            "startDate": "2015-01-05",
+            "endDevDate": "2015-01-23",
+            "releaseDate": "2015-02-07",
+            "description": "",
+            "order": 1
+        },
+        {
+            "title": "Task title",
+            "startDate": "2015-01-05",
+            "endDevDate": "2015-01-23",
+            "releaseDate": "2015-02-07",
+            "description": "",
+            "order": 1
+        },
+        {
+            "title": "Task title",
+            "startDate": "2015-01-05",
+            "endDevDate": "2015-01-23",
+            "releaseDate": "2015-02-07",
+            "description": "",
+            "order": 1
+        },
+        {
+            "title": "Task title",
+            "startDate": "2015-01-05",
+            "endDevDate": "2015-01-23",
+            "releaseDate": "2015-02-07",
+            "description": "",
+            "order": 1
+        }
+    ]
+}

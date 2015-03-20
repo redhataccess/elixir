@@ -1,0 +1,135 @@
+{
+    "name": "Work Stream 2",
+    "color": "#FFA500",
+    "active": true,
+    "tasks": [
+        {
+            "title": "Task title",
+            "startDate": "2015-01-05",
+            "endDevDate": "2015-01-16",
+            "releaseDate": "2015-01-23",
+            "description": "",
+            "order": 2
+        },
+        {
+            "title": "Task title",
+            "startDate": "2015-01-05",
+            "endDevDate": "2015-01-16",
+            "releaseDate": "2015-01-23",
+            "description": "",
+            "order": 2
+        },
+        {
+            "title": "Task title",
+            "startDate": "2015-01-05",
+            "endDevDate": "2015-01-16",
+            "releaseDate": "2015-01-23",
+            "description": "",
+            "order": 2
+        },
+        {
+            "title": "Task title",
+            "startDate": "2015-01-05",
+            "endDevDate": "2015-01-16",
+            "releaseDate": "2015-01-23",
+            "description": "",
+            "order": 2
+        },
+        {
+            "title": "Task title",
+            "startDate": "2015-01-05",
+            "endDevDate": "2015-01-16",
+            "releaseDate": "2015-01-23",
+            "description": "",
+            "order": 2
+        },
+        {
+            "title": "Task title",
+            "startDate": "2015-01-05",
+            "endDevDate": "2015-01-16",
+            "releaseDate": "2015-01-23",
+            "description": "",
+            "order": 2
+        },
+        {
+            "title": "Task title",
+            "startDate": "2015-01-05",
+            "endDevDate": "2015-01-16",
+            "releaseDate": "2015-01-23",
+            "description": "",
+            "order": 2
+        },
+        {
+            "title": "Task title",
+            "startDate": "2015-01-05",
+            "endDevDate": "2015-01-16",
+            "releaseDate": "2015-01-23",
+            "description": "",
+            "order": 2
+        },
+        {
+            "title": "Task title",
+            "startDate": "2015-01-05",
+            "endDevDate": "2015-01-16",
+            "releaseDate": "2015-01-23",
+            "description": "",
+            "order": 2
+        },
+        {
+            "title": "Task title",
+            "startDate": "2015-01-05",
+            "endDevDate": "2015-01-16",
+            "releaseDate": "2015-01-23",
+            "description": "",
+            "order": 2
+        },
+        {
+            "title": "Task title",
+            "startDate": "2015-01-05",
+            "endDevDate": "2015-01-16",
+            "releaseDate": "2015-01-23",
+            "description": "",
+            "order": 2
+        },
+        {
+            "title": "Task title",
+            "startDate": "2015-01-05",
+            "endDevDate": "2015-01-16",
+            "releaseDate": "2015-01-23",
+            "description": "",
+            "order": 2
+        },
+        {
+            "title": "Task title",
+            "startDate": "2015-01-05",
+            "endDevDate": "2015-01-16",
+            "releaseDate": "2015-01-23",
+            "description": "",
+            "order": 2
+        },
+        {
+            "title": "Task title",
+            "startDate": "2015-01-05",
+            "endDevDate": "2015-01-16",
+            "releaseDate": "2015-01-23",
+            "description": "",
+            "order": 2
+        },
+        {
+            "title": "Task title",
+            "startDate": "2015-01-05",
+            "endDevDate": "2015-01-16",
+            "releaseDate": "2015-01-23",
+            "description": "",
+            "order": 2
+        },
+        {
+            "title": "Task title",
+            "startDate": "2015-01-05",
+            "endDevDate": "2015-01-16",
+            "releaseDate": "2015-01-23",
+            "description": "",
+            "order": 2
+        }
+    ]
+}

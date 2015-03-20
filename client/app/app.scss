@@ -1,0 +1,25 @@
+$icon-font-path: "/assets/fonts/";
+$fa-font-path: "/bower_components/font-awesome/fonts";
+
+//
+// Color variables
+// --------------------------------------------------
+$app-red: #cc0000;
+$app-gray-darker: #1a1a1a;
+$app-gray-dark: #252527;
+$app-gray: #4c4c4c;
+$app-gray-light: #646464;
+$app-gray-lighter: #8d8d8d;
+$app-gray-silver: #d2d3d4;
+$app-gray-very-light: #f0f0f0;
+$app-gray-very-very-light: #f7f7f7;
+
+@import 'bootstrap-sass-official/vendor/assets/stylesheets/bootstrap';
+@import 'font-awesome/scss/font-awesome';
+/**
+ * App-wide Styles
+ */
+// Component styles are injected through grunt
+// injector
+@import 'main/main.scss';
+// endinjector
