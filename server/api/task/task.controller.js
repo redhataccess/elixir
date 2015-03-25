@@ -33,7 +33,6 @@ exports.index = function (req, res) {
         validateAndAppend(data, combinedStream, ']', 'workstream4');
         
         combinedStream.pipe(accum.string({encoding: 'utf8'}, function (alldata) {
-            console.log(alldata);
             return res.json(200, JSON.parse(alldata));
         }));
         
