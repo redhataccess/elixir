@@ -31,12 +31,11 @@ exports.index = function (req, res) {
         return retrieveData('http://localhost:9000/files/file4.json');
     }).then(function (data) {
         validateAndAppend(data, combinedStream, ']', 'workstream4');
-        
+
         combinedStream.pipe(accum.string({encoding: 'utf8'}, function (alldata) {
-            console.log(alldata);
             return res.json(200, JSON.parse(alldata));
         }));
-        
+
     }).fail(function (err) {
         console.error(err);
         handleError(res, err);
@@ -73,7 +72,7 @@ function validateAndAppend(data, combinedStream, appendChar, workStreamName) {
         //don't make the existing string invalid
         //and other valid data can be parsed
         if (appendChar === ']') {
-            combinedStream.append('{}'+appendChar);
+            combinedStream.append('{}' + appendChar);
         } else {
             combinedStream.append('{ },');
         }
