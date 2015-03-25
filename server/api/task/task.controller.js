@@ -33,6 +33,7 @@ exports.index = function (req, res) {
         validateAndAppend(data, combinedStream, ']', 'workstream4');
         
         combinedStream.pipe(accum.string({encoding: 'utf8'}, function (alldata) {
+            console.log(alldata);
             return res.json(200, JSON.parse(alldata));
         }));
         
@@ -72,7 +73,7 @@ function validateAndAppend(data, combinedStream, appendChar, workStreamName) {
         //don't make the existing string invalid
         //and other valid data can be parsed
         if (appendChar === ']') {
-            combinedStream.append(appendChar);
+            combinedStream.append('{}'+appendChar);
         } else {
             combinedStream.append('{ },');
         }
