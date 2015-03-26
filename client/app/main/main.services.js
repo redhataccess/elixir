@@ -85,6 +85,9 @@ angular.module('elixirApp')
     var build = function (workstreamList) {
 
         for( var i = 0, workstreamlenght = workstreamList.length; i < workstreamlenght; i++ ){
+            if(workstreamList[i]==undefined || workstreamList[i].tasks==undefined){
+                        continue;
+            }
             var taskLength = workstreamList[i].tasks.length;
             if( workstreamList[i].active === true ) {
                 var workstream = {};
