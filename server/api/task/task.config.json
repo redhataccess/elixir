@@ -1,0 +1,22 @@
+{
+    "workstreams": 
+            [
+                {
+                    "name" :"workstream1",
+                    "url" : "http://localhost:9000/files/file1.json"
+                },
+                {
+                    "name" :"workstream2",
+                    "url" : "http://localhost:9000/files/file2.json"
+                },
+                {
+                    "name" :"workstream3",
+                    "url" : "http://localhost:9000/files/file3.json"
+                },
+                {
+                    "name" :"workstream4",
+                    "url" : "http://localhost:9000/files/file4.json"
+                }
+                
+            ]
+}
