@@ -3,9 +3,7 @@
   "version": "0.0.0",
   "main": "server/app.js",
   "dependencies": {
-    "accum": "^0.3.6",
     "body-parser": "~1.5.0",
-    "combined-stream": "0.0.7",
     "composable-middleware": "^0.3.0",
     "compression": "~1.0.1",
     "cookie-parser": "~1.0.1",
