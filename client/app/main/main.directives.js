@@ -98,7 +98,11 @@ angular.module('elixirApp')
             };
 
             element.find('.task-wrapper').bind('mouseenter', function (event) {
-                scope.$emit('showHint', {xPos: event.clientX, yPos: event.clientY});
+                scope.$emit('showHint', {
+                    element: this,
+                    xPos: event.clientX,
+                    yPos: event.clientY
+                });
             });
 
             element.find('.task-wrapper').bind('mouseleave', function () {
@@ -116,7 +120,7 @@ angular.module('elixirApp')
         restrict: 'E',
         template:
             '<div class="task-info hidden">' +
-                '<div class="task-info-arrow"></div>' +
+                '<div class="task-info-arrow" ng-class="direction"></div>' +
                 '<div class="task-info-inner ng-binding">' +
                     '<h5>{{task.title}}</h5>' +
                     '<b>Start:</b> {{task.startDate}}<br><b>Finish:</b> {{task.endDevDate}}<br><b>Release:</b> {{task.releaseDate}}' +
@@ -133,11 +137,29 @@ angular.module('elixirApp')
         },
         link: function (scope, element) {
             scope.$on('showHint', function (event, data) {
-                element.css({
-                    'left': data.xPos + 'px',
-                    'top': data.yPos + 'px'
-                });
+                var $taskWrapper = angular.element(data.element),
+                    $infoArrow = element.find('.task-info-arrow'),
+                    left = data.xPos,
+                    buffer = 15,
+                    top = $taskWrapper.offset().top + buffer;
+
                 element.removeClass('hidden');
+
+                if (top + element.height() > $(window).height()) {
+                    top = $taskWrapper.offset().top - element.outerHeight(true) - buffer;
+                    scope.direction = 'bottom';
+                    $infoArrow.css('top', element.outerHeight(true) - buffer);
+                } else {
+                    scope.direction = 'top';
+                    $infoArrow.css('top', 0);
+                }
+
+                element.css({
+                    'left': left,
+                    'top': top
+                });
+
+                scope.$apply();
             });
 
             scope.$on('hideHint', function () {
