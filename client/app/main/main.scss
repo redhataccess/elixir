@@ -367,9 +367,9 @@ label {
 //
 // Task info box
 // --------------------------------------------------
-.hidden {
-    display: none;
-}
+// .hidden {
+//     display: none;
+// }
 
 .task-info {
     top: 0;
@@ -380,17 +380,30 @@ label {
     font-size: 12px;
     line-height: 14px;
     visibility: visible;
-}
 
-.task-info .task-info-arrow {
-    top: 0px;
-    left: 0px;
-    position: absolute;
-    width: 0px;
-    height: 0px;
-    border-left: 0px solid transparent;
-    border-right: 15px solid transparent;
-    border-bottom: 15px solid $app-gray;
+    .hidden {
+        display: none;
+    }
+
+    .task-info-arrow {
+        top: 0px;
+        left: 0px;
+        position: absolute;
+        width: 0px;
+        height: 0px;
+    }
+
+    .bottom {
+        border-right: 15px solid transparent;
+        border-left: 0px solid transparent;
+        border-top: 15px solid $app-gray;
+    }
+
+    .top {
+        border-left: 0px solid transparent;
+        border-right: 15px solid transparent;
+        border-bottom: 15px solid $app-gray;
+    }
 }
 
 .task-info .task-info-inner {
