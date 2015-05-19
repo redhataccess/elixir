@@ -156,7 +156,7 @@ angular.module('elixirApp')
 
                 element.css({
                     'left': left,
-                    'top': top
+                    'top': top - window.scrollY
                 });
 
                 scope.$apply();
