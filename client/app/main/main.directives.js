@@ -141,12 +141,12 @@ angular.module('elixirApp')
                     $infoArrow = element.find('.task-info-arrow'),
                     left = data.xPos,
                     buffer = 15,
-                    top = $taskWrapper.offset().top + buffer;
+                    top = $taskWrapper.offset().top + buffer - window.scrollY;
 
                 element.removeClass('hidden');
 
                 if (top + element.height() > $(window).height()) {
-                    top = $taskWrapper.offset().top - element.outerHeight(true) - buffer;
+                    top = $taskWrapper.offset().top - element.outerHeight(true) - buffer - window.scrollY;
                     scope.direction = 'bottom';
                     $infoArrow.css('top', element.outerHeight(true) - buffer);
                 } else {
