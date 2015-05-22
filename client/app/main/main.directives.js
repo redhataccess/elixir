@@ -11,7 +11,9 @@ angular.module('elixirApp')
         '<div class="task-container">' +
             '<div class="task-track">' +
                 '<div class="task-wrapper">' +
-                    '<div class="task-title-wrapper noselect">{{task.title}}</div>' +
+                    '<div class="task-title-wrapper noselect">' +
+                        '<span style="position: absolute;">{{task.title}}</span>' +
+                    '</div>' +
                     '<div class="end-dev-to-release-line"></div>' +
                     '<div class="start-dev-point"></div>' +
                     '<div class="end-dev-point"></div>' +
@@ -81,6 +83,9 @@ angular.module('elixirApp')
                 var noDays = DateRange.getNoDays();
                 var columnWidth = $window.innerWidth / noDays;
                 var startDate = DateRange.getStartDate();
+                var $wrapper = element.find('.task-title-wrapper');
+                var $span = element.find('span');
+                var buffer = 10;
 
                 startDevPointLeftPosition = moment(scope.task.startDate).diff(startDate, 'days') * columnWidth;
                 endDevPointLeftPosition = moment(scope.task.endDevDate).diff(startDate, 'days') * columnWidth;
@@ -95,6 +100,22 @@ angular.module('elixirApp')
                 positionStartPoint(startDevPointLeftPosition);
                 positionEndPoint(endDevPointLeftPosition);
                 positionReleasePoint(releasePointLeftPosition);
+
+                if ($wrapper.offset().left > 0) {
+                    $span.offset({
+                        left: 'auto'
+                    });
+                } else {
+                    if ($wrapper.offset().left + $wrapper.width() < $span.width()) {
+                        $span.offset({
+                            left: $wrapper.offset().left + $wrapper.width() - $span.width() + buffer
+                        });
+                    } else {
+                        $span.offset({
+                            left: buffer
+                        });
+                    }
+                }
             };
 
             element.find('.task-wrapper').bind('mouseenter', function (event) {
