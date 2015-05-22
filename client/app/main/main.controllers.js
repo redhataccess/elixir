@@ -136,14 +136,6 @@ angular.module('elixirApp')
         $scope.$broadcast('rangeChanged');
     });
 
-    $scope.showAll = function () {
-        $scope.all = true;
-        $scope.addedWorkstreams = [];
-        angular.forEach($scope.workstreams, function (workstream) {
-            workstream.selected = false;
-        });
-    };
-
     $scope.toggleAll = function (state) {
         $scope.all = state || !$scope.all;
         $scope.addedWorkstreams = ($scope.all) ? $scope.workstreams.map(function (workstream) { return workstream.name; }) : [];
@@ -153,22 +145,19 @@ angular.module('elixirApp')
         });
     };
 
-    // As all tasks are listed whem user open the page, we make
-    // all button selected
-    //$scope.all = true;
-
     $scope.filterTaskResult = function (workstream) {
         var i = $scope.addedWorkstreams.indexOf(workstream);
 
         if (i === -1 ) {
-            $scope.all = false;
             $scope.addedWorkstreams.push(workstream);
         } else {
             $scope.addedWorkstreams.splice(i, 1);
         }
 
-        if($scope.addedWorkstreams.length === 0) {
+        if ($scope.addedWorkstreams.length === $scope.workstreams.length) {
             $scope.all = true;
+        } else {
+            $scope.all = false;
         }
     };
 
@@ -190,6 +179,8 @@ angular.module('elixirApp')
                 $scope.scaleChanged();
                 $scope.loading = false;
 
+                // As all tasks are listed whem user open the page, we make
+                // all button selected
                 $scope.toggleAll(true);
             });
     };
