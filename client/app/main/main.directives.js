@@ -12,7 +12,7 @@ angular.module('elixirApp')
             '<div class="task-track">' +
                 '<div class="task-wrapper">' +
                     '<div class="task-title-wrapper noselect">' +
-                        '<span style="position: absolute;">{{task.title}}</span>' +
+                        '<span>{{task.title}}</span>' +
                     '</div>' +
                     '<div class="end-dev-to-release-line"></div>' +
                     '<div class="start-dev-point"></div>' +
