@@ -32,7 +32,7 @@
                     value=""
                     ng-modle="all"
                     ng-checked="all"
-                    ng-click="showAll()"/>
+                    ng-click="toggleAll()"/>
                 <span class="noselect">
                     All
                 </span>
@@ -45,7 +45,7 @@
                     ng-model="workstream.selected"
                     value="{{workstream.name}}"
                     ng-click="filterTaskResult(workstream.name, selected, all)"/>
-                <span class="noselect" ng-style="workstream.selected === true  && { 'background-color': workstream.color }">
+                <span class="noselect" ng-style="{'background-color': workstream.selected ? workstream.color : '', 'color': !workstream.selected ? workstream.color : ''}">
                     {{workstream.name}}
                 </span>
             </label>
