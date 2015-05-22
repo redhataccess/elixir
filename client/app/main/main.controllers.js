@@ -144,9 +144,18 @@ angular.module('elixirApp')
         });
     };
 
+    $scope.toggleAll = function (state) {
+        $scope.all = state || !$scope.all;
+        $scope.addedWorkstreams = ($scope.all) ? $scope.workstreams.map(function (workstream) { return workstream.name; }) : [];
+
+        angular.forEach($scope.workstreams, function (workstream) {
+            workstream.selected = $scope.all;
+        });
+    };
+
     // As all tasks are listed whem user open the page, we make
     // all button selected
-    $scope.all = true;
+    //$scope.all = true;
 
     $scope.filterTaskResult = function (workstream) {
         var i = $scope.addedWorkstreams.indexOf(workstream);
@@ -171,17 +180,17 @@ angular.module('elixirApp')
                 $scope.workstreams = Tasks.activeWorkstreams;
                 $scope.tasksInRange = Tasks.getTasksInRange(DateRange.startDate, DateRange.endDate);
                 $scope.$broadcast('rangeChanged');
-                
-                
+
                 // need to call your event handler manually if changing the model programatically
-                //https://docs.angularjs.org/api/ng/directive/ngChange states that 
+                //https://docs.angularjs.org/api/ng/directive/ngChange states that
                 //The ngChange expression is only evaluated when a change in the input value causes a new value to be committed to the model.
                 //It will not be evaluated if the model is changed programmatically and not by a change to the input value
 
                 //calling it here as we are sure that workstream and task data has been retrieved
                 $scope.scaleChanged();
                 $scope.loading = false;
-                
+
+                $scope.toggleAll(true);
             });
     };
 
