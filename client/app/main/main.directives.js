@@ -280,8 +280,7 @@ angular.module('elixirApp')
                     start = coords.x;
                 },
                 'move': function (coords) {
-                    if (start > coords.x) {
-                        scope.shiftBack('day');
+                    if (start < coords.x) {
                         scope.$apply();
                     } else {
                         scope.shiftForward('day');
