@@ -6,7 +6,7 @@ angular.module('elixirApp', [
   'ngRoute',
   'ngTouch'
 ])
-  .config(function ($routeProvider, $locationProvider, $httpProvider) {
+  .config(function ($routeProvider, $locationProvider) {
     $routeProvider
       .otherwise({
         redirectTo: '/'

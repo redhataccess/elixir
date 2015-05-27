@@ -270,6 +270,17 @@ angular.module('elixirApp')
         }
     };
 })
+
+/*
+ * handle the drag of the timeline which will call shiftBack
+ * and shiftForward to update the date range of the timeline.
+ *
+ * one interesting note, we pass true as the third parameter
+ * (dontUpdateQueryString) in shiftBack and shiftForward in the
+ * move callback so we don't continually update the query string
+ * params for startDate and endDate. when the user is done
+ * dragging, we'll then update the query string start and end dates.
+ */
 .directive('headerDrag', function ($swipe) {
     return {
         restrict: 'A',
@@ -280,13 +291,17 @@ angular.module('elixirApp')
                     start = coords.x;
                 },
                 'move': function (coords) {
-                    if (start > coords.x) {
-                        scope.shiftBack('day');
+                    if (start < coords.x) {
+                        scope.shiftBack('day', null, true);
                         scope.$apply();
                     } else {
-                        scope.shiftForward('day');
+                        scope.shiftForward('day', null, true);
                         scope.$apply();
                     }
+                },
+                'end': function () {
+                    scope.updateQueryStringDates();
+                    scope.$apply();
                 }
             });
         }

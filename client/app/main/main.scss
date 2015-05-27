@@ -121,16 +121,13 @@ to {transform: rotate(359deg);}
     margin: 0px;
 }
 
-.workstream-button label span {
-    cursor: pointer;
-    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
-}
-
 .workstream-button label span,
 .scale-button span {
     text-align: center;
     display: block;
     padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
 }
 
 .workstream-button label input,

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('elixirApp')
-.controller('MainCtrl', function ($scope, $q, $log, Tasks, DateRange, GetTimespan, $rootScope, WorkStreamsData) {
+.controller('MainCtrl', function ($scope, $q, $log, $location, $routeParams, Tasks, DateRange, GetTimespan, $rootScope, WorkStreamsData) {
 
     $scope.timespan = [
         { title: 'Month', value: 'M' },
@@ -23,11 +23,20 @@ angular.module('elixirApp')
 
     $scope.addedWorkstreams = [];
 
-    var reset = function () {
+    var reset = function (dontUpdateQueryString) {
         DateRange.resetDates($scope.startDate, $scope.endDate);
         $scope.tasksInRange = Tasks.getTasksInRange($scope.startDate, $scope.endDate);
 
         $scope.$broadcast('rangeChanged');
+
+        if (!dontUpdateQueryString) {
+            $scope.updateQueryStringDates();
+        }
+    };
+
+    $scope.updateQueryStringDates = function () {
+        $location.search('startDate', $scope.startDate);
+        $location.search('endDate', $scope.endDate);
     };
 
     $scope.scaleChanged = function () {
@@ -49,13 +58,12 @@ angular.module('elixirApp')
             $scope.endDate = GetTimespan.getFirstLastDaysOfYear($scope.startDate).lastDay;
         }
 
-        DateRange.resetDates($scope.startDate, $scope.endDate);
-        $scope.tasksInRange = Tasks.getTasksInRange($scope.startDate, $scope.endDate);
+        $location.search('timeScale', $scope.timeScale);
 
-        $rootScope.$broadcast('rangeChanged');
+        reset();
     };
 
-    $scope.shiftBack = function (timeScale, n) {
+    $scope.shiftBack = function (timeScale, n, dontUpdateQueryString) {
         if (!n) { n = 1; }
         if (timeScale === 'FY') {
             timeScale = 'y';
@@ -64,10 +72,10 @@ angular.module('elixirApp')
         $scope.startDate = moment($scope.startDate).subtract( n , timeScale);
         $scope.endDate = moment($scope.endDate).subtract( n , timeScale);
 
-        reset();
+        reset(dontUpdateQueryString);
     };
 
-    $scope.shiftForward = function (timeScale, n) {
+    $scope.shiftForward = function (timeScale, n, dontUpdateQueryString) {
         if (!n) { n = 1; }
         if (timeScale === 'FY') {
             timeScale = 'y';
@@ -76,7 +84,7 @@ angular.module('elixirApp')
         $scope.startDate = moment($scope.startDate).add( n , timeScale);
         $scope.endDate = moment($scope.endDate).add( n , timeScale);
 
-        reset();
+        reset(dontUpdateQueryString);
     };
 
     $scope.zoomOut = function (timeScale) {
@@ -161,28 +169,69 @@ angular.module('elixirApp')
         }
     };
 
+    /*
+     * keep an eye on all of the workstreams and update the ws query
+     * string parameter to reflect the selected workstreams
+     */
+    $scope.$watch('addedWorkstreams', function (newValue, oldValue) {
+        if (newValue.length > 0) {
+            $location.search('ws', newValue.join(','));
+        }
+
+        if (newValue.length === 0 && oldValue.length > 0) {
+            $location.search('ws', null);
+        }
+    }, true);
+
+    /*
+     * load all of the workstreams then set the state of the application based
+     * on the query string parameters. we'll be looking to set the state of the
+     * selected workstreams, the timeline and the selected timeline buttons
+     */
     var init = function () {
+        Tasks.ready.then(function() {
+            var selectedWorkstreams = 0;
 
-        DateRange.resetDates($scope.startDate, $scope.endDate);
+            $scope.workstreams = Tasks.activeWorkstreams;
 
-            Tasks.ready.then(function() {
-                $scope.workstreams = Tasks.activeWorkstreams;
-                $scope.tasksInRange = Tasks.getTasksInRange(DateRange.startDate, DateRange.endDate);
-                $scope.$broadcast('rangeChanged');
+            if ($location.search().startDate) {
+                $scope.startDate = moment(new Date($location.search().startDate));
+            }
 
-                // need to call your event handler manually if changing the model programatically
-                //https://docs.angularjs.org/api/ng/directive/ngChange states that
-                //The ngChange expression is only evaluated when a change in the input value causes a new value to be committed to the model.
-                //It will not be evaluated if the model is changed programmatically and not by a change to the input value
+            if ($location.search().endDate) {
+                $scope.endDate = moment(new Date($location.search().endDate));
+            }
 
-                //calling it here as we are sure that workstream and task data has been retrieved
-                $scope.scaleChanged();
-                $scope.loading = false;
+            if ($location.search().timeScale) {
+                $scope.timeScale = $location.search().timeScale;
+            }
 
-                // As all tasks are listed whem user open the page, we make
-                // all button selected
+            reset();
+
+            // need to call your event handler manually if changing the model programatically
+            //https://docs.angularjs.org/api/ng/directive/ngChange states that
+            //The ngChange expression is only evaluated when a change in the input value causes a new value to be committed to the model.
+            //It will not be evaluated if the model is changed programmatically and not by a change to the input value
+
+            $scope.loading = false;
+
+            if ($location.search().ws) {
+                $scope.addedWorkstreams = $location.search().ws.split(',');
+
+                angular.forEach($scope.workstreams, function (workstream) {
+                    if ($location.search().ws.indexOf(workstream.name) > -1) {
+                        workstream.selected = true;
+                        selectedWorkstreams += 1;
+                    }
+                });
+
+                if (selectedWorkstreams === $scope.workstreams.length) {
+                    $scope.all = true;
+                }
+            } else {
                 $scope.toggleAll(true);
-            });
+            }
+        });
     };
 
     init();
