@@ -1,59 +1,57 @@
 <div class="container-fluid">
-
-    <div class="row">
-        <div class="col-md-12 header">
-            <h4>Elixir</h4>
+    <div class="nav-container">
+        <div class="row nav">
+            <div class="col-md-3">
+                <h4>Elixir</h4>
+            </div>
+            <div class="col-md-9">
+                <button ng-click="zoomIn(timeScale)" class="btn btn-default"><span class="glyphicon glyphicon-zoom-in"></span></button>
+                <button ng-click="zoomOut(timeScale)" class="btn btn-default"><span class="glyphicon glyphicon-zoom-out"></span></button>
+                <button ng-click="today()" class="btn btn-default">Today</button>
+                <button ng-click="shiftBack(timeScale)" class="btn btn-arrow">&lt;</button><label ng-repeat="item in timespan" class="scale-button">
+                    <input
+                        type="radio"
+                        ng-model="$parent.timeScale"
+                        value="{{item.value}}"
+                        name="interval"
+                        ng-change="scaleChanged()"/>
+                    <span class="noselect">
+                        {{item.title}}
+                    </span>
+                </label><button ng-click="shiftForward(timeScale)" class="btn btn-arrow">&gt;</button>
+            </div>
+        </div>
+        <div class="row workstream-buttons-wrapper">
+            <div class="workstream-button">
+                <label>
+                    <input
+                        class="all"
+                        type="checkbox"
+                        value=""
+                        ng-modle="all"
+                        ng-checked="all"
+                        ng-click="toggleAll()"/>
+                    <span class="noselect">
+                        All
+                    </span>
+                </label>
+            </div>
+            <div class="workstream-button" ng-repeat="workstream in workstreams">
+                <label>
+                    <input
+                        type="checkbox"
+                        ng-model="workstream.selected"
+                        value="{{workstream.name}}"
+                        ng-click="filterTaskResult(workstream.name, selected, all)"/>
+                    <span class="noselect" ng-style="{'background-color': workstream.selected ? workstream.color : '', 'color': !workstream.selected ? workstream.color : ''}">
+                        {{workstream.name}}
+                    </span>
+                </label>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12 scale-buttons-wrapper">
-            <button ng-click="zoomIn(timeScale)" class="btn btn-default"><span class="glyphicon glyphicon-zoom-in"></span></button>
-            <button ng-click="zoomOut(timeScale)" class="btn btn-default"><span class="glyphicon glyphicon-zoom-out"></span></button>
-            <button ng-click="today()" class="btn btn-default">Today</button>
-            <button ng-click="shiftBack(timeScale)" class="btn btn-arrow">&lt;</button><label ng-repeat="item in timespan" class="scale-button">
-                <input
-                    type="radio"
-                    ng-model="$parent.timeScale"
-                    value="{{item.value}}"
-                    name="interval"
-                    ng-change="scaleChanged()"/>
-                <span class="noselect">
-                    {{item.title}}
-                </span>
-            </label><button ng-click="shiftForward(timeScale)" class="btn btn-arrow">&gt;</button>
-        </div>
-    </div>
-    <div class="row workstream-buttons-wrapper">
-        <div class="workstream-button">
-            <label>
-                <input
-                    class="all"
-                    type="checkbox"
-                    value=""
-                    ng-modle="all"
-                    ng-checked="all"
-                    ng-click="toggleAll()"/>
-                <span class="noselect">
-                    All
-                </span>
-            </label>
-        </div>
-        <div class="workstream-button" ng-repeat="workstream in workstreams">
-            <label>
-                <input
-                    type="checkbox"
-                    ng-model="workstream.selected"
-                    value="{{workstream.name}}"
-                    ng-click="filterTaskResult(workstream.name, selected, all)"/>
-                <span class="noselect" ng-style="{'background-color': workstream.selected ? workstream.color : '', 'color': !workstream.selected ? workstream.color : ''}">
-                    {{workstream.name}}
-                </span>
-            </label>
-        </div>
-    </div>
-    <div class="row noselect">
-        <div timeline-header class="header-wrapper" header-drag draggable="false">
-        </div>
+    <div timeline-header class="noselect" header-drag draggable="false"></div>
+    <div class="row noselect tasks-container">
         <div class="tasks-wrapper">
             <div timeline-grid class="grid"></div>
             <div today class="grid"></div>

@@ -1,6 +1,8 @@
 $line-thickness: 3px;
+$total-nav-height: 160px;
+
 body {
-    background-color: #f7f7f7;
+    background-color: $app-gray-very-very-light;
 }
 //
 // Helper
@@ -99,6 +101,30 @@ to {transform: rotate(359deg);}
     z-index: -1;
  }
 
+ .nav-container {
+     position: fixed;
+     z-index: 9999;
+     left: 0;
+     right: 0;
+     padding: 0 15px;
+     height: $total-nav-height;
+     background-color: $app-gray-very-very-light;
+
+     .nav {
+         height: 60px;
+         padding: 13px 0;
+     }
+ }
+
+[timeline-header] {
+    position: fixed;
+    margin-top: 110px;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background-color: $app-gray-very-light;
+}
+
 //
 // Top Work Stream buttons
 // --------------------------------------------------
@@ -106,6 +132,7 @@ to {transform: rotate(359deg);}
     background-color: $app-gray-very-light;
     border-top: $app-gray-silver 1px solid;
     border-bottom: #ffffff 1px solid;
+    height: 50px;
 }
 
 .workstream-button {
@@ -222,6 +249,10 @@ label {
 //
 // Tasks
 // --------------------------------------------------
+.tasks-container {
+    padding-top: $total-nav-height;
+}
+
 .tasks-wrapper,
 .grid-wrapper {
     position: relative;
@@ -317,9 +348,6 @@ label {
 //
 // Timeline
 // --------------------------------------------------
-.header-wrapper {
-    position: relative;
-}
 
 .grid {
     position: absolute;
