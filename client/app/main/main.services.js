@@ -164,6 +164,47 @@ angular.module('elixirApp')
         return firstLastDays;
     };
 
+    var getFirstLastDaysOfFiscalQuarter = function (date) {
+
+        // Fiscal quarter starts on March
+        var firstLastDays;
+
+        // Get month number. Starts with 0.
+        var month = parseInt(date.get('month'));
+
+        if ( month > 1 &&  month < 5 ) {
+
+            // First fiscal quarter
+            firstLastDays = {
+                                firstDay: moment(date).month(2).startOf('month'),
+                                lastDay: moment(date).month(4).endOf('month')
+                            };
+        } else if ( month > 4 && month < 8 ) {
+
+            // Second fiscal quarter
+            firstLastDays = {
+                                firstDay: moment(date).month(5).startOf('month'),
+                                lastDay: moment(date).month(7).endOf('month')
+                            };
+        } else if ( month > 7 && month < 11 ) {
+
+            // Third fiscal quarter
+            firstLastDays = {
+                                firstDay: moment(date).month(8).startOf('month'),
+                                lastDay: moment(date).month(10).endOf('month')
+                            };
+        } else if ( month === 11 || month < 2 ) {
+
+            // Last fiscal quarter month 0 last fiscal from last year - month 11 last this year
+            firstLastDays = {
+                                firstDay: moment(date).month(11).startOf('month'),
+                                lastDay: moment(date).month(1).endOf('month').add(1, 'years')
+                            };
+        }
+
+        return firstLastDays;
+    };
+
     var getFirstLastDaysOfFiscalYear = function (date) {
 
         // Get month number. Starts with 0.
@@ -197,6 +238,7 @@ angular.module('elixirApp')
         getFirstLastDaysOfMonth: getFirstLastDaysOfMonth,
         getFirstLastDaysOfQuarter: getFirstLastDaysOfQuarter,
         getFirstLastDaysOfFiscalYear: getFirstLastDaysOfFiscalYear,
+        getFirstLastDaysOfFiscalQuarter: getFirstLastDaysOfFiscalQuarter,
         getFirstLastDaysOfYear: getFirstLastDaysOfYear
     };
 });

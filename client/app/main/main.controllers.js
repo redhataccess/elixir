@@ -17,7 +17,8 @@ angular.module('elixirApp')
 
 
     // Get current Quarter
-    var startEndDate = GetTimespan.getFirstLastDaysOfQuarter(moment());
+    var startEndDate = GetTimespan.getFirstLastDaysOfFiscalQuarter(moment());
+
     $scope.startDate = startEndDate.firstDay;
     $scope.endDate = startEndDate.lastDay;
 
@@ -46,8 +47,8 @@ angular.module('elixirApp')
             $scope.endDate = GetTimespan.getFirstLastDaysOfMonth($scope.startDate).lastDay;
 
         } else if ( $scope.timeScale === 'Q') {
-            $scope.startDate = GetTimespan.getFirstLastDaysOfQuarter($scope.startDate).firstDay;
-            $scope.endDate = GetTimespan.getFirstLastDaysOfQuarter($scope.startDate).lastDay;
+            $scope.startDate = GetTimespan.getFirstLastDaysOfFiscalQuarter($scope.startDate).firstDay;
+            $scope.endDate = GetTimespan.getFirstLastDaysOfFiscalQuarter($scope.startDate).lastDay;
 
         } else if ( $scope.timeScale === 'FY') {
             $scope.startDate = GetTimespan.getFirstLastDaysOfFiscalYear($scope.endDate).firstDay;
@@ -125,8 +126,8 @@ angular.module('elixirApp')
             $scope.endDate = GetTimespan.getFirstLastDaysOfMonth(date).lastDay;
 
         } else if ( $scope.timeScale === 'Q') {
-            $scope.startDate = GetTimespan.getFirstLastDaysOfQuarter(date).firstDay;
-            $scope.endDate = GetTimespan.getFirstLastDaysOfQuarter(date).lastDay;
+            $scope.startDate = GetTimespan.getFirstLastDaysOfFiscalQuarter(date).firstDay;
+            $scope.endDate = GetTimespan.getFirstLastDaysOfFiscalQuarter(date).lastDay;
 
         } else if ( $scope.timeScale === 'FY') {
             $scope.startDate = GetTimespan.getFirstLastDaysOfFiscalYear(date).firstDay;
