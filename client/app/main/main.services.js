@@ -206,7 +206,7 @@ angular.module('elixirApp')
     return {
       getWorkStreamsData : function() {
         var deferred = $q.defer();
-        $http.get('/api/tasks')
+        $http.get('/api/workstreams')
           .success(function(result) {
             deferred.resolve(result);
           })
