@@ -25,6 +25,7 @@ node_modules/
 # App Files
 # --------------------
 test/coverage/
+server/populate.js
 
 # --------------------
 # Bower Files
