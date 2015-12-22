@@ -13,10 +13,7 @@ module.exports = function (grunt) {
   require('jit-grunt')(grunt, {
     express: 'grunt-express-server',
     useminPrepare: 'grunt-usemin',
-    ngtemplates: 'grunt-angular-templates',
-    protractor: 'grunt-protractor-runner',
-    injector: 'grunt-asset-injector',
-    buildcontrol: 'grunt-build-control'
+    injector: 'grunt-asset-injector'
   });
 
   // Time how long tasks take. Can help when optimizing build times
@@ -65,16 +62,6 @@ module.exports = function (grunt) {
           '<%= yeoman.client %>/app/**/*.css'
         ],
         tasks: ['injector:css']
-      },
-      injectSass: {
-        files: [
-          '<%= yeoman.client %>/app/**/*.{scss,sass}'],
-        tasks: ['injector:sass']
-      },
-      sass: {
-        files: [
-          '<%= yeoman.client %>/app/**/*.{scss,sass}'],
-        tasks: ['sass', 'autoprefixer']
       },
       gruntfile: {
         files: ['Gruntfile.js']
@@ -169,31 +156,6 @@ module.exports = function (grunt) {
       }
     },
 
-    // Use nodemon to run server in debug mode with an initial breakpoint
-    nodemon: {
-      debug: {
-        script: 'server/app.js',
-        options: {
-          nodeArgs: ['--debug-brk'],
-          env: {
-            PORT: process.env.PORT || 9000
-          },
-          callback: function (nodemon) {
-            nodemon.on('log', function (event) {
-              console.log(event.colour);
-            });
-
-            // opens browser on initial server start
-            nodemon.on('config:update', function () {
-              setTimeout(function () {
-                require('open')('http://localhost:8080/debug?port=5858');
-              }, 500);
-            });
-          }
-        }
-      }
-    },
-
     // Renames files for browser caching purposes
     rev: {
       dist: {
@@ -201,8 +163,7 @@ module.exports = function (grunt) {
           src: [
             '<%= yeoman.dist %>/public/{,*/}*.js',
             '<%= yeoman.dist %>/public/{,*/}*.css',
-            '<%= yeoman.dist %>/public/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-            '<%= yeoman.dist %>/public/assets/fonts/*'
+            '<%= yeoman.dist %>/public/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
           ]
         }
       }
@@ -272,34 +233,6 @@ module.exports = function (grunt) {
         }]
       }
     },
-
-    // Package all the html partials into a single javascript payload
-    ngtemplates: {
-      options: {
-        // This should be the name of your apps angular module
-        module: 'elixirApp',
-        htmlmin: {
-          collapseBooleanAttributes: true,
-          collapseWhitespace: true,
-          removeAttributeQuotes: true,
-          removeEmptyAttributes: true,
-          removeRedundantAttributes: true,
-          removeScriptTypeAttributes: true,
-          removeStyleLinkTypeAttributes: true
-        },
-        usemin: 'app/app.js'
-      },
-      main: {
-        cwd: '<%= yeoman.client %>',
-        src: ['app/**/*.html'],
-        dest: '.tmp/templates.js'
-      },
-      tmp: {
-        cwd: '.tmp',
-        src: ['app/**/*.html'],
-        dest: '.tmp/tmp-templates.js'
-      }
-    },
     // Copies remaining files to places other tasks can use
     copy: {
       dist: {
@@ -312,8 +245,10 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '.htaccess',
             'assets/**/*',
+            'fonts/*',
             'files/*',
-            'index.html'
+            'index.html',
+            'app/main/main.html'
           ]
         }, {
           expand: true,
@@ -337,50 +272,6 @@ module.exports = function (grunt) {
       }
     },
 
-    buildcontrol: {
-      options: {
-        dir: 'dist',
-        commit: true,
-        push: true,
-        connectCommits: false,
-        message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
-      },
-      heroku: {
-        options: {
-          remote: 'heroku',
-          branch: 'master'
-        }
-      },
-      openshift: {
-        options: {
-          remote: 'openshift',
-          branch: 'master'
-        }
-      }
-    },
-
-    // Run some tasks in parallel to speed up the build process
-    concurrent: {
-      server: [
-        'sass',
-      ],
-      test: [
-        'sass',
-      ],
-      debug: {
-        tasks: [
-          'nodemon',
-          'node-inspector'
-        ],
-        options: {
-          logConcurrentOutput: true
-        }
-      },
-      dist: [
-        'sass'
-      ]
-    },
-
     env: {
       test: {
         NODE_ENV: 'test'
@@ -389,23 +280,6 @@ module.exports = function (grunt) {
         NODE_ENV: 'production'
       },
       all: localConfig
-    },
-
-    // Compiles Sass to CSS
-    sass: {
-      server: {
-        options: {
-          loadPath: [
-            '<%= yeoman.client %>/bower_components',
-            '<%= yeoman.client %>/app',
-            '<%= yeoman.client %>/components'
-          ],
-          compass: false
-        },
-        files: {
-          '.tmp/app/app.css' : '<%= yeoman.client %>/app/app.scss'
-        }
-      }
     },
 
     injector: {
@@ -428,25 +302,6 @@ module.exports = function (grunt) {
               ['{.tmp,<%= yeoman.client %>}/app/**/*.js',
                '!{.tmp,<%= yeoman.client %>}/app/app.js']
             ]
-        }
-      },
-
-      // Inject component scss into app.scss
-      sass: {
-        options: {
-          transform: function(filePath) {
-            filePath = filePath.replace('/client/app/', '');
-            filePath = filePath.replace('/client/components/', '');
-            return '@import \'' + filePath + '\';';
-          },
-          starttag: '// injector',
-          endtag: '// endinjector'
-        },
-        files: {
-          '<%= yeoman.client %>/app/app.scss': [
-            '<%= yeoman.client %>/app/**/*.{scss,sass}',
-            '!<%= yeoman.client %>/app/app.{scss,sass}'
-          ]
         }
       },
 
@@ -495,19 +350,14 @@ module.exports = function (grunt) {
       return grunt.task.run([
         'clean:server',
         'env:all',
-        'injector:sass',
-        'concurrent:server',
         'injector',
-        'autoprefixer',
-        'concurrent:debug'
+        'autoprefixer'
       ]);
     }
 
     grunt.task.run([
       'clean:server',
       'env:all',
-      'injector:sass',
-      'concurrent:server',
       'injector',
       'autoprefixer',
       'express:dev',
@@ -523,12 +373,9 @@ module.exports = function (grunt) {
   });
   grunt.registerTask('build', [
     'clean:dist',
-    'injector:sass',
-    'concurrent:dist',
     'injector',
     'useminPrepare',
     'autoprefixer',
-    'ngtemplates',
     'concat',
     'ngAnnotate',
     'copy:dist',
@@ -538,8 +385,4 @@ module.exports = function (grunt) {
     'usemin'
   ]);
 
-  grunt.registerTask('default', [
-    'newer:jshint',
-    'build'
-  ]);
 };
