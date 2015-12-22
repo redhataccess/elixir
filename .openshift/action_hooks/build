@@ -1,0 +1,21 @@
+#!/bin/bash
+
+HOME=$OPENSHIFT_REPO_DIR
+cd "${OPENSHIFT_REPO_DIR}"
+npm install --loglevel error
+
+# If there is a bower file, run bower
+if [ -f "${OPENSHIFT_REPO_DIR}"/bower.json ]; then
+    mkdir -p "$OPENSHIFT_DATA_DIR"bower_components
+    ln -s "$OPENSHIFT_DATA_DIR"bower_components client/
+    (cd "${OPENSHIFT_REPO_DIR}"; node_modules/bower/bin/bower install)
+fi
+
+# If there is a grunt file, run $ grunt
+if [ -f "${OPENSHIFT_REPO_DIR}"/Gruntfile.js ]; then
+    (cd "${OPENSHIFT_REPO_DIR}"; node_modules/grunt-cli/bin/grunt build)
+fi
+
+ls -1 | grep -E -v 'dist|node_modules' | xargs rm -rf
+mv dist/* .
+rm -rf dist
