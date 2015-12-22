@@ -4,12 +4,12 @@
 // =================================
 module.exports = {
   // Server IP
-  ip:       process.env.OPENSHIFT_NODEDIY_IP ||
+  ip:       process.env.OPENSHIFT_NODEJS_IP ||
             process.env.IP ||
             'localhost',
 
   // Server port
-  port:     process.env.OPENSHIFT_NODEDIY_PORT ||
+  port:     process.env.OPENSHIFT_NODEJS_PORT ||
             process.env.PORT ||
             8080,
 };
