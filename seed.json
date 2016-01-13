@@ -1,0 +1,5 @@
+{
+	"undefined": "localhost/elixir",
+	"dev": "localhost/elixir",
+	"prod": "localhost/elixir"
+}
