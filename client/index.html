@@ -1,8 +1,5 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,24 +11,19 @@
     <!-- build:css(client) app/vendor.css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="bower_components/angular-bootstrap-colorpicker/css/colorpicker.css">
+    <link rel="stylesheet" href="bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css">
     <!-- endbuild -->
     <!-- build:css({.tmp,client}) app/app.css -->
       <!-- injector:css -->
+      <link rel="stylesheet" href="app/admin/admin.css">
       <link rel="stylesheet" href="app/main/main.css">
       <!-- endinjector -->
     <!-- endbuild -->
   </head>
   <body ng-app="elixirApp">
-    <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-
     <!-- Add your site or application content here -->
     <div ng-view=""></div>
-    <!--[if lt IE 9]>
-    <script src="bower_components/es5-shim/es5-shim.js"></script>
-    <script src="bower_components/json3/lib/json3.min.js"></script>
-    <![endif]-->
     <script src="assets/js/jquery.min.js"></script>
     <!-- build:js({client,node_modules}) app/vendor.js -->
       <!-- bower:js -->
@@ -39,15 +31,22 @@
       <script src="bower_components/angular-cookies/angular-cookies.js"></script>
       <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
       <script src="bower_components/angular-route/angular-route.js"></script>
-      <script src="bower_components/lodash/dist/lodash.compat.js"></script>
       <script src="bower_components/angular-touch/angular-touch.js"></script>
       <script src="bower_components/moment/moment.js"></script>
+      <script src="bower_components/angular-resource/angular-resource.js"></script>
+      <script src="bower_components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js"></script>
+      <script src="bower_components/jquery/dist/jquery.js"></script>
+      <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+      <script src="bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,client}) app/app.js -->
         <script src="app/app.js"></script>
           <!-- injector:js -->
+          <script src="app/admin/admin.js"></script>
+          <script src="app/admin/scripts/services.js"></script>
+          <script src="app/admin/scripts/workstreamController.js"></script>
           <script src="app/main/main.controllers.js"></script>
           <script src="app/main/main.directives.js"></script>
           <script src="app/main/main.filters.js"></script>

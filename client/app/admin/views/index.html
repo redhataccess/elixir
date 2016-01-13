@@ -1,0 +1,177 @@
+<nav class="navbar navbar-default">
+  <div class="container">
+      <div class="navbar-header page-scroll">
+          <div class="navbar-brand">Elixir Admin</div>
+      </div>
+
+      <div>
+          <ul class="nav navbar-nav navbar-right">
+              <li>
+                  <a href="/">Elixir</a>
+              </li>
+          </ul>
+      </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="row">
+    <!-- Add workstream -->
+    <div>
+      <a class="pull-right" ng-click="showNewWorkstreamForm=true;showNewWorkstreamLink=false" ng-show="showNewWorkstreamLink" style="height:34px;">Add New Workstream</a>
+    </div>
+    <div class="row row-content pull-right" ng-show="showNewWorkstreamForm">
+      <form ng-submit="save();showNewWorkstreamLink=true;showNewWorkstreamForm=false" class="form-inline" name="workstreamForm" novalidate>
+        <div class="form-group">
+          <input type="text" ng-model="workstream.name" class="form-control" placeholder="Workstream Name" name="workstreamName" required/>
+        </div>
+        <div class="form-group">
+          <input type="text" ng-model="workstream.color" class="hide"/>
+          <button colorpicker class="btn" type="button" style="background-color: {{workstream.color}}; background-color:{{workstream.color}};color: #fff;font-weight: bold;" colorpicker-position="bottom" ng-model="workstream.color">Select Color</button>
+        </div>
+        <div class="form-group">
+          <select class="form-control" ng-model="workstream.active">
+            <option value="true" ng-selected="true">Active</option>
+            <option value="false">Deactive</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" type="submit" ng-disabled="workstreamForm.workstreamName.$invalid">Submit</button>
+        <button class="btn btn-primary" ng-click="showNewWorkstreamLink=true;showNewWorkstreamForm=false;">Cancel</button>
+      </form>
+    </div>
+    <!-- End of add workstream -->
+  </div>
+  <div class="row">
+    <div class="col-md-9">
+      <div ng-show="items.$resolved && items.length == 0">
+        <hr/>
+        <p>Use the 'Add New Workstream' button to create a new workstream!</p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <table class="table table-cp table-striped" summary="A table showing people's names, their ages, and their favorite colors">
+      <thead>
+        <tr>
+          <th id="th-name" scope="col" style="width:200px;">Workstream</th>
+          <th id="th-color" scope="col">Color</th>
+          <th id="th-status" scope="col">active</th>
+          <th id="th-color" scope="col">Tasks</th>
+          <th id="th-delete" scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="item in items">
+          <th id="th-person1" headers="th-name">
+            <div ng-show="workstreamNameView">
+              {{item.name}}
+              <a ng-click="workstreamNameEdit=true;workstreamNameView=false;newName=item.name;"><i class="fa fa-pencil"></i></a>
+            </div>
+            <div ng-show="workstreamNameEdit">
+              <input type="text" ng-model="newName" size="12">
+              <button class="btn btn-primary btn-xs" type="button" ng-click="workstreamNameEdit=false;workstreamNameView=true;item.name=newName;workstreamUpdate(item);"><i class="fa fa-check"></i></button>
+              <button class="btn btn-primary btn-xs" type="button" ng-click="workstreamNameEdit=false;workstreamNameView=true;"><i class="fa fa-times"></i></button>
+            </div>
+          </th>
+          <td headers="th-person1 th-color">
+            <button ng-click="setCurrentWorkstreamId(item._id);" class="btn btn-xs" style="background-color: {{item.color}}; background-color:{{item.color}};color: #fff;" colorpicker type="button" colorpicker-position="top" ng-model="item.color"><i class="fa fa-paint-brush"></i></button>
+          </td>
+          <td headers="th-person1 th-status">
+            <a ng-show="item.active" ng-click="item.active=!item.active;workstreamUpdate(item);">Active</a>
+            <a ng-show="!item.active" ng-click="item.active=!item.active;workstreamUpdate(item);">Deactive</a>
+          </td>
+          <td headers="th-person1 th-color">
+            <ul class="tasks">
+              <li ng-repeat="task in item.tasks">
+                {{task.title}}
+                <a href="" type="button" data-toggle="modal" data-target="#addEdditTaskModal" ng-click="modalCustomization('edit', item._id);setEditTaskOnModalWindow(item._id, task._id);"><i class="fa fa-pencil"></i></a>
+                <a href="" ng-click="destroyTask(item._id, task._id)" ><i class="fa fa-trash-o"></i></a>
+              </li>
+            </ul>
+            <!-- add new task button -->
+            <a type="button" data-toggle="modal" data-target="#addEdditTaskModal" ng-click="modalCustomization('add', item._id);"><i class="fa fa-plus"></i></a>
+          </td>
+          <td headers="th-person1 th-delete"><a ng-click="destroy($index)" href=""><i class="fa fa-trash-o"></i></a></td>
+        </tr>
+        <tr></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- Add/Eddit task modal window -->
+<div class="modal fade" id="addEdditTaskModal" tabindex="-1" role="dialog" aria-labelledby="addEdditTaskModal">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">{{modalTitle}}</h4>
+      </div>
+      <form class="form-horizontal" name="taskForm" novalidate>
+        <div class="modal-body">
+          <div class="row" style="margin:0px 30px;">
+            <div class="form-group">
+              <label for="recipient-name" class="control-label">Task Name:<span class="red">*</span></label>
+              <input type="text" ng-model="title" style="width: 100%;" name="taskName" required/>
+            </div>
+            <div class="form-group">
+              <label for="message-text" class="control-label">Description:<span class="red">*</span></label>
+              <textarea ng-model="description" rows="4" style="width: 100%;" name="taskDesc" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="message-text" class="control-label">Start Date:<span class="red">*</span></label>
+              <div class="dropdown">
+                <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="#" href="#">
+                  <div class="input-group">
+                    <input type="text" class="form-control" data-ng-model="startDate" name="taskStartDate" required>
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                  </div>
+                </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                  <datetimepicker data-ng-model="startDate" data-datetimepicker-config="{ startView:'day', minView:'day',  dropdownSelector: '#dropdown2' }"/>
+                </ul>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="message-text" class="control-label">End Date:<span class="red">*</span></label>
+              <div class="dropdown">
+                <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="#" href="#">
+                  <div class="input-group">
+                    <input type="text" class="form-control" data-ng-model="endDevDate" name="taskEndDate" required>
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                  </div>
+                </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                  <datetimepicker data-ng-model="endDevDate" data-datetimepicker-config="{ startView:'day', minView:'day',  dropdownSelector: '#dropdown2' }"/>
+                </ul>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="message-text" class="control-label">Release Date:<span class="red">*</span></label>
+              <div class="dropdown">
+                <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="#" href="#">
+                  <div class="input-group">
+                    <input type="text" class="form-control" data-ng-model="releaseDate" name="taskReleaseDate" required>
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                  </div>
+                </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                  <datetimepicker data-ng-model="releaseDate" data-datetimepicker-config="{ startView:'day', minView:'day',  dropdownSelector: '#dropdown2' }"/>
+                </ul>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label">Order:<span class="red">*</span></label>
+              <input type="text" ng-model="order" style="width: 100%;" placeholder="Order" name="taskOrder" required/>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="resetTaskForm()">Close</button>
+          <button type="button" class="btn btn-primary" ng-disabled="taskForm.taskName.$invalid || taskForm.taskDesc.$invalid || taskForm.taskStartDate.$invalid || taskForm.taskEndDate.$invalid || taskForm.taskReleaseDate.$invalid || taskForm.taskOrder.$invalid" ng-show="modalAddTaskBtn" ng-click="saveTask();">Add</button>
+          <button type="button" class="btn btn-primary" ng-disabled="taskForm.taskName.$invalid || taskForm.taskDesc.$invalid || taskForm.taskStartDate.$invalid || taskForm.taskEndDate.$invalid || taskForm.taskReleaseDate.$invalid || taskForm.taskOrder.$invalid" ng-show="modalEditTaskBtn" ng-click="updateTask();">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- End of Add/Eddit task modal window -->

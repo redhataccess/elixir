@@ -1,0 +1,52 @@
+body {
+    color: #4c4c4c;
+}
+
+ul.tasks {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+
+ul.tasks li:before {
+    content: "";
+    border-color: transparent #9a9a9a;
+    border-style: solid;
+    border-width: 4px 0 4px 4px;
+    display: inline-block;
+    height: 0;
+    width: 0;
+    margin-right: 6px;
+    vertical-align: middle;
+    top: -1px;
+    position: relative;
+}
+
+ul.tasks li a {
+    padding: 0px 3px;
+}
+
+AddTaskBtn {
+    display: block;
+    margin: 6px 0 6px 10px;
+    cursor: pointer;
+}
+
+.modal-content {
+    border-radius: 0px;
+}
+
+/* remove halo blue effect around buttons */
+a:active,
+a:focus {
+    -webkit-appearance:none !important;
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border-color: none !important;
+    outline:0px !important;
+}
+
+.red {
+    color: red;
+}
