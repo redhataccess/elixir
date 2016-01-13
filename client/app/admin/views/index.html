@@ -54,18 +54,18 @@
       <thead>
         <tr>
           <th id="th-name" scope="col" style="width:200px;">Workstream</th>
-          <th id="th-color" scope="col">Color</th>
-          <th id="th-status" scope="col">active</th>
-          <th id="th-color" scope="col">Tasks</th>
-          <th id="th-delete" scope="col"></th>
+          <th id="th-color" scope="col" style="width:50px;">Color</th>
+          <th id="th-status" scope="col" style="width:50px;">active</th>
+          <th id="th-tasks" scope="col">Tasks</th>
+          <th id="th-delete" scope="col" style="width:20px;"></th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="item in items">
-          <th id="th-person1" headers="th-name">
-            <div ng-show="workstreamNameView">
-              {{item.name}}
-              <a ng-click="workstreamNameEdit=true;workstreamNameView=false;newName=item.name;"><i class="fa fa-pencil"></i></a>
+          <th id="th-workstrem" headers="th-name">
+            <div ng-show="workstreamNameView" onmouseover="$(this).children('.elixir-edit-workstream-name').show();" onmouseout="$(this).children('.elixir-edit-workstream-name').hide();">
+              <a>{{item.name}}</a>
+              <a href="" ng-click="workstreamNameEdit=true;workstreamNameView=false;newName=item.name;" class="elixir-edit-workstream-name" style="display:none;"><i class="fa fa-pencil"></i></a>
             </div>
             <div ng-show="workstreamNameEdit">
               <input type="text" ng-model="newName" size="12">
@@ -73,25 +73,27 @@
               <button class="btn btn-primary btn-xs" type="button" ng-click="workstreamNameEdit=false;workstreamNameView=true;"><i class="fa fa-times"></i></button>
             </div>
           </th>
-          <td headers="th-person1 th-color">
-            <button ng-click="setCurrentWorkstreamId(item._id);" class="btn btn-xs" style="background-color: {{item.color}}; background-color:{{item.color}};color: #fff;" colorpicker type="button" colorpicker-position="top" ng-model="item.color"><i class="fa fa-paint-brush"></i></button>
+          <td headers="th-workstrem th-color">
+            <button ng-click="setCurrentWorkstreamId(item._id);" class="btn btn-xs" style="background-color: {{item.color}}; background-color:{{item.color}};color:#fff;" colorpicker type="button" colorpicker-position="top" ng-model="item.color"><i class="fa fa-paint-brush"></i></button>
           </td>
-          <td headers="th-person1 th-status">
+          <td headers="th-workstrem th-status">
             <a ng-show="item.active" ng-click="item.active=!item.active;workstreamUpdate(item);">Active</a>
             <a ng-show="!item.active" ng-click="item.active=!item.active;workstreamUpdate(item);">Deactive</a>
           </td>
-          <td headers="th-person1 th-color">
+          <td headers="th-workstrem th-tasks">
             <ul class="tasks">
-              <li ng-repeat="task in item.tasks">
-                {{task.title}}
-                <a href="" type="button" data-toggle="modal" data-target="#addEdditTaskModal" ng-click="modalCustomization('edit', item._id);setEditTaskOnModalWindow(item._id, task._id);"><i class="fa fa-pencil"></i></a>
-                <a href="" ng-click="destroyTask(item._id, task._id)" ><i class="fa fa-trash-o"></i></a>
+              <li ng-repeat="task in item.tasks" onmouseover="$(this).children('.elixir-task-edit').show();$(this).children('.elixir-task-remove').show();" onmouseout="$(this).children('.elixir-task-edit').hide();$(this).children('.elixir-task-remove').hide();">
+                <a >{{task.title}}</a>
+                <!-- edit task button -->
+                <a href="" class="elixir-task-edit" type="button" data-toggle="modal" data-target="#addEdditTaskModal" ng-click="modalCustomization('edit', item._id);setEditTaskOnModalWindow(item._id, task._id);" style="display:none"><i class="fa fa-pencil"></i></a>
+                <!-- remove task button -->
+                <a href="" class="elixir-task-remove" ng-click="destroyTask(item._id, task._id)" style="display:none"><i class="fa fa-trash-o"></i></a>
               </li>
             </ul>
             <!-- add new task button -->
             <a type="button" data-toggle="modal" data-target="#addEdditTaskModal" ng-click="modalCustomization('add', item._id);"><i class="fa fa-plus"></i></a>
           </td>
-          <td headers="th-person1 th-delete"><a ng-click="destroy($index)" href=""><i class="fa fa-trash-o"></i></a></td>
+          <td headers="th-workstrem th-delete"><a ng-click="destroy($index)" href=""><i class="fa fa-trash-o"></i></a></td>
         </tr>
         <tr></tr>
       </tbody>
