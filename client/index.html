@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="bower_components/angular-bootstrap-colorpicker/css/colorpicker.css">
     <link rel="stylesheet" href="bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css">
     <!-- endbuild -->
-    <!-- build:css({.tmp,client}) app/app.css -->
+    <!-- build:css(client) app/app.css -->
       <!-- injector:css -->
       <link rel="stylesheet" href="app/admin/admin.css">
       <link rel="stylesheet" href="app/main/main.css">
@@ -25,7 +25,7 @@
     <!-- Add your site or application content here -->
     <div ng-view=""></div>
     <script src="assets/js/jquery.min.js"></script>
-    <!-- build:js({client,node_modules}) app/vendor.js -->
+    <!-- build:js(client) app/vendor.js -->
       <!-- bower:js -->
       <script src="bower_components/angular/angular.js"></script>
       <script src="bower_components/angular-cookies/angular-cookies.js"></script>
@@ -40,10 +40,9 @@
       <script src="bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
-
-        <!-- build:js({.tmp,client}) app/app.js -->
-        <script src="app/app.js"></script>
-          <!-- injector:js -->
+    <!-- build:js({.tmp,client}) app/app.js -->
+      <!-- injector:js -->
+          <script src="app/app.js"></script>
           <script src="app/admin/admin.js"></script>
           <script src="app/admin/scripts/services.js"></script>
           <script src="app/admin/scripts/workstreamController.js"></script>
@@ -52,7 +51,7 @@
           <script src="app/main/main.filters.js"></script>
           <script src="app/main/main.js"></script>
           <script src="app/main/main.services.js"></script>
-          <!-- endinjector -->
-        <!-- endbuild -->
+      <!-- endinjector -->
+    <!-- endbuild -->
 </body>
 </html>
