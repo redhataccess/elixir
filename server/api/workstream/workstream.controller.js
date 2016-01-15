@@ -1,6 +1,7 @@
 'use strict';
 
 var Workstream = require('./workstream.model');
+var objectAssign = require('object-assign');
 
 function handleError(res, err) {
     return res.send(500, err);
@@ -98,7 +99,7 @@ exports.updateWorkstreamTask = function (req, res) {
             return res.json(404);
         }
 
-        var updatedTask = Object.assign(task, req.body);
+        var updatedTask = objectAssign(task, req.body);
 
         workstream.save(function (err) {
             if (err) {
