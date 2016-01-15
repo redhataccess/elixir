@@ -1,10 +1,10 @@
 <div class="container-fluid">
     <div class="nav-container">
         <div class="row nav">
-            <div class="col-md-3">
+            <div class="col-md-1 hidden-sm hidden-xs">
                 <h4>Elixir</h4>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-10 text-center">
                 <button ng-click="zoomIn(timeScale)" class="btn btn-default"><span class="glyphicon glyphicon-zoom-in"></span></button>
                 <button ng-click="zoomOut(timeScale)" class="btn btn-default"><span class="glyphicon glyphicon-zoom-out"></span></button>
                 <button ng-click="today()" class="btn btn-default">Today</button>
@@ -19,6 +19,9 @@
                         {{item.title}}
                     </span>
                 </label><button ng-click="shiftForward(timeScale)" class="btn btn-arrow">&gt;</button>
+            </div>
+            <div class="col-md-1 hidden-sm hidden-xs">
+                <button type="button" class="btn btn-sm btn-elixir-home pull-right" onclick="location.href='/admin'">Admin</button>
             </div>
         </div>
         <div class="row workstream-buttons-wrapper">
