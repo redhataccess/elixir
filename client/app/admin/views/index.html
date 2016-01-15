@@ -7,7 +7,7 @@
       <div>
           <ul class="nav navbar-nav navbar-right">
               <li class="elixir-home">
-                  <button type="button" class="btn btn-sm btn-elixir-home" onclick="location.href='/'">Elixir Home</button>
+                  <button type="button" class="btn btn-sm btn-elixir-home" onclick="location.href='/'">Task Viewer</button>
               </li>
           </ul>
       </div>
@@ -75,9 +75,11 @@
           <td headers="th-workstrem th-color">
             <button ng-click="setCurrentWorkstreamId(item._id);" class="btn btn-xs" style="background-color: {{item.color}}; background-color:{{item.color}};color:#fff;" colorpicker type="button" colorpicker-position="top" ng-model="item.color"><i class="fa fa-paint-brush"></i></button>
           </td>
-          <td headers="th-workstrem th-state" class="noselect">
-            <a href="" ng-show="item.active" ng-click="item.active=!item.active;workstreamUpdate(item);">Active</a>
-            <a href="" ng-show="!item.active" ng-click="item.active=!item.active;workstreamUpdate(item);">Inactive</a>
+          <td headers="th-workstrem th-state" class="noselect state">
+            <label ng-click="item.active=!item.active;workstreamUpdate(item);">
+              <input type="checkbox" class="switch" ng-model="item.active" />
+              <div class="switch" ></div>
+            </label>
           </td>
           <td headers="th-workstrem th-tasks">
             <!-- workstream delete confirmation -->

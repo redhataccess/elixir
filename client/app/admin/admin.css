@@ -133,3 +133,50 @@ ul.tasks li a {
 #addEdditTaskModal .row {
     margin:0px 30px;
 }
+
+/**
+ * Switch-style checkboxes.
+ */
+
+.state input[type="checkbox"]:not(:checked),
+.state input[type="checkbox"]:checked { /* :checked here acting as a filter for older browsers */
+    position: absolute;
+    opacity: 0;
+    width: 0px;
+}
+
+.state input[type="checkbox"].switch + div {
+    width: 1.8em;   height: 1em;
+    border: 1px solid rgba(0,0,0,.3);
+    border-radius: 999px;
+    margin: 0 auto;
+    background: #888;
+    background-image: linear-gradient(rgba(0,0,0,.2), transparent);
+    background-origin: border-box;
+    background-clip: border-box;
+    box-shadow: 0 1px 1px hsla(0,0%,100%,.8);
+    overflow: hidden;
+    transition-duration: .4s;
+    transition-property: padding, width;
+}
+
+.state input[type="checkbox"].switch:checked + div {
+    padding-left: .8em;
+    width: 1.8em;
+    background-color: #337AB7;
+}
+
+.state input[type="checkbox"].switch + div:before {
+    content: '';
+    display: block;
+    width: 1em; height: 1em;
+    margin: -1px;
+    border: 1px solid rgba(0,0,0,.7);
+    border-radius: inherit;
+    background: #c4c4c4;
+    background-image: linear-gradient(hsla(0,0%,100%,.3), hsla(0,0%,100%,0));
+}
+
+.state input[type="checkbox"].switch:active + div:before {
+    background-color: #aaa;
+}
