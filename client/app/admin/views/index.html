@@ -6,8 +6,8 @@
 
       <div>
           <ul class="nav navbar-nav navbar-right">
-              <li>
-                  <a href="/">Elixir</a>
+              <li class="elixir-home">
+                  <button type="button" class="btn btn-sm btn-elixir-home" onclick="location.href='/'">Elixir Home</button>
               </li>
           </ul>
       </div>
@@ -18,7 +18,7 @@
   <div class="row">
     <!-- Add workstream -->
     <div>
-      <a class="pull-right" ng-click="showNewWorkstreamForm=true;showNewWorkstreamLink=false" ng-show="showNewWorkstreamLink" style="height:34px;">Add New Workstream</a>
+      <button type="button" class="pull-right btn btn-primary" ng-click="showNewWorkstreamForm=true;showNewWorkstreamLink=false" ng-show="showNewWorkstreamLink">Add New Workstream</button>
     </div>
     <div class="row row-content pull-right" ng-show="showNewWorkstreamForm">
       <form ng-submit="save();showNewWorkstreamLink=true;showNewWorkstreamForm=false" class="form-inline" name="workstreamForm" novalidate>
@@ -32,7 +32,7 @@
         <div class="form-group">
           <select class="form-control" ng-model="workstream.active">
             <option value="true" ng-selected="true">Active</option>
-            <option value="false">Deactive</option>
+            <option value="false">Inactive</option>
           </select>
         </div>
         <button class="btn btn-primary" type="submit" ng-disabled="workstreamForm.workstreamName.$invalid">Submit</button>
@@ -49,20 +49,20 @@
     </div>
   </div>
   <div class="row">
-    <table class="table table-cp table-striped" summary="A table showing people's names, their ages, and their favorite colors">
+    <table class="table table-cp table-striped workstrams-table" summary="A table showing people's names, their ages, and their favorite colors">
       <thead>
         <tr>
-          <th id="th-name" scope="col" style="width:200px;">Workstream</th>
-          <th id="th-color" scope="col" style="width:50px;">Color</th>
-          <th id="th-status" scope="col" style="width:50px;">active</th>
+          <th id="th-name" scope="col" class="workstream-name-col">Workstream</th>
+          <th id="th-color" scope="col" class="workstream-color-col">Color</th>
+          <th id="th-state" scope="col" class="workstream-state-col">State</th>
           <th id="th-tasks" scope="col">Tasks</th>
-          <th id="th-delete" scope="col" style="width:20px;"></th>
+          <th id="th-delete" scope="col" class="workstream-delete-col"></th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="item in items">
           <th id="th-workstrem" headers="th-name">
-            <div ng-show="workstreamNameView" onmouseover="$(this).children('.elixir-edit-workstream-name').show();" onmouseout="$(this).children('.elixir-edit-workstream-name').hide();">
+            <div class="workstream-name" ng-show="workstreamNameView" onmouseover="$(this).children('.elixir-edit-workstream-name').show();" onmouseout="$(this).children('.elixir-edit-workstream-name').hide();">
               <a>{{item.name}}</a>
               <a href="" ng-click="workstreamNameEdit=true;workstreamNameView=false;newName=item.name;" class="elixir-edit-workstream-name" style="display:none;"><i class="fa fa-pencil"></i></a>
             </div>
@@ -75,24 +75,33 @@
           <td headers="th-workstrem th-color">
             <button ng-click="setCurrentWorkstreamId(item._id);" class="btn btn-xs" style="background-color: {{item.color}}; background-color:{{item.color}};color:#fff;" colorpicker type="button" colorpicker-position="top" ng-model="item.color"><i class="fa fa-paint-brush"></i></button>
           </td>
-          <td headers="th-workstrem th-status">
-            <a ng-show="item.active" ng-click="item.active=!item.active;workstreamUpdate(item);">Active</a>
-            <a ng-show="!item.active" ng-click="item.active=!item.active;workstreamUpdate(item);">Deactive</a>
+          <td headers="th-workstrem th-state" class="noselect">
+            <a href="" ng-show="item.active" ng-click="item.active=!item.active;workstreamUpdate(item);">Active</a>
+            <a href="" ng-show="!item.active" ng-click="item.active=!item.active;workstreamUpdate(item);">Inactive</a>
           </td>
           <td headers="th-workstrem th-tasks">
+            <!-- workstream delete confirmation -->
+            <span class="workstrem-delete-confirm">Are you sure want to delete {{item.name}} workstream? <a href="" ng-click="destroy($index)">Yes</a> or <a href="" onclick="$(this).parent().hide();">Cancel</a></span>
             <ul class="tasks">
-              <li ng-repeat="task in item.tasks" onmouseover="$(this).children('.elixir-task-edit').show();$(this).children('.elixir-task-remove').show();" onmouseout="$(this).children('.elixir-task-edit').hide();$(this).children('.elixir-task-remove').hide();">
+              <li ng-repeat="task in item.tasks" onmouseover="$(this).children('.elixir-task-edit').show();$(this).children('.elixir-task-remove').show();" onmouseout="$(this).children('.elixir-task-edit').hide(); $(this).children('.elixir-task-remove').hide();">
                 <a >{{task.title}}</a>
-                <!-- edit task button -->
+                <!-- task edit button -->
                 <a href="" class="elixir-task-edit" type="button" data-toggle="modal" data-target="#addEdditTaskModal" ng-click="modalCustomization('edit', item._id);setEditTaskOnModalWindow(item._id, task._id);" style="display:none"><i class="fa fa-pencil"></i></a>
-                <!-- remove task button -->
-                <a href="" class="elixir-task-remove" ng-click="destroyTask(item._id, task._id)" style="display:none"><i class="fa fa-trash-o"></i></a>
+                <!-- task delete button -->
+                <a href="" class="elixir-task-remove" onclick="$(this).next().show();" style="display:none"><i class="fa fa-trash-o"></i></a>
+                <!-- task delete confirmation -->
+                <span class="task-delete-confirm">Are you sure want to delete this task? <a href="" ng-click="destroyTask(item._id, task._id);">Yes</a> or <a href="" onclick="$(this).parent().hide();">Cancel</a></span>
               </li>
             </ul>
             <!-- add new task button -->
-            <a type="button" data-toggle="modal" data-target="#addEdditTaskModal" ng-click="modalCustomization('add', item._id);"><i class="fa fa-plus"></i></a>
+            <a href="" type="button" data-toggle="modal" data-target="#addEdditTaskModal" ng-click="modalCustomization('add', item._id);" claas="add-task-btn"><i class="fa fa-plus"></i></a>
           </td>
-          <td headers="th-workstrem th-delete"><a ng-click="destroy($index)" href=""><i class="fa fa-trash-o"></i></a></td>
+          <td headers="th-workstrem th-delete">
+            <div>
+              <!-- workstream delete button -->
+              <a href="" onclick="$(this).closest('td').prev().find('.workstrem-delete-confirm').show();"><i class="fa fa-trash-o"></i></a>
+            </div>
+          </td>
         </tr>
         <tr></tr>
       </tbody>
@@ -109,14 +118,14 @@
       </div>
       <form class="form-horizontal" name="taskForm" novalidate>
         <div class="modal-body">
-          <div class="row" style="margin:0px 30px;">
+          <div class="row">
             <div class="form-group">
               <label for="recipient-name" class="control-label">Task Name:<span class="red">*</span></label>
-              <input type="text" ng-model="title" style="width: 100%;" name="taskName" required/>
+              <input type="text" ng-model="title" class="full-width" name="taskName" required/>
             </div>
             <div class="form-group">
               <label for="message-text" class="control-label">Description:<span class="red">*</span></label>
-              <textarea ng-model="description" rows="4" style="width: 100%;" name="taskDesc" required></textarea>
+              <textarea ng-model="description" rows="4" class="full-width" name="taskDesc" required></textarea>
             </div>
             <div class="form-group">
               <label for="message-text" class="control-label">Start Date:<span class="red">*</span></label>
@@ -162,7 +171,7 @@
             </div>
             <div class="form-group">
               <label class="control-label">Order:<span class="red">*</span></label>
-              <input type="text" ng-model="order" style="width: 100%;" placeholder="Order" name="taskOrder" required/>
+              <input type="text" ng-model="order" class="full-width" placeholder="Order" name="taskOrder" required/>
             </div>
           </div>
         </div>

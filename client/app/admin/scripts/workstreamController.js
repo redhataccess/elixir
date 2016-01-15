@@ -3,12 +3,14 @@
 angular.module('elixirApp')
 .controller('WorkstreamIndexController', ['$scope', 'Workstream', 'Task', function($scope, Workstream, Task) {
 
-    // add workstream form init
+    // workstream form init
     $scope.showNewWorkstreamLink = true;
-    $scope.workstream = {};
-    $scope.workstream.color = 'red';
+    $scope.workstream = {
+        color: 'red'
+    };
     $scope.workstreamNameView = true;
 
+    // task add/edit modal window init
     $scope.modalTitle = 'Add Task';
     $scope.modalEditTaskBtn = false;
     $scope.modalAddTaskBtn = false;
