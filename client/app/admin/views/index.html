@@ -85,7 +85,7 @@
             <!-- workstream delete confirmation -->
             <span class="workstrem-delete-confirm">Are you sure want to delete {{item.name}} workstream? <a href="" ng-click="destroy($index)">Yes</a> or <a href="" onclick="$(this).parent().hide();">Cancel</a></span>
             <ul class="tasks">
-              <li ng-repeat="task in item.tasks" onmouseover="$(this).children('.elixir-task-edit').show();$(this).children('.elixir-task-remove').show();" onmouseout="$(this).children('.elixir-task-edit').hide(); $(this).children('.elixir-task-remove').hide();">
+              <li ng-repeat="task in item.tasks | orderBy:'order'" onmouseover="$(this).children('.elixir-task-edit').show();$(this).children('.elixir-task-remove').show();" onmouseout="$(this).children('.elixir-task-edit').hide(); $(this).children('.elixir-task-remove').hide();">
                 <a >{{task.title}}</a>
                 <!-- task edit button -->
                 <a href="" class="elixir-task-edit" type="button" data-toggle="modal" data-target="#addEdditTaskModal" ng-click="modalCustomization('edit', item._id);setEditTaskOnModalWindow(item._id, task._id);" style="display:none"><i class="fa fa-pencil"></i></a>
