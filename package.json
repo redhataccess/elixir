@@ -4,6 +4,7 @@
   "main": "server/app.js",
   "dependencies": {
     "body-parser": "~1.5.0",
+    "bower": "*",
     "compression": "~1.0.1",
     "cookie-parser": "~1.0.1",
     "ejs": "~0.8.4",
@@ -13,6 +14,7 @@
     "grunt": "~0.4.4",
     "grunt-asset-injector": "^0.1.0",
     "grunt-autoprefixer": "~0.7.2",
+    "grunt-cli": "*",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-concat": "~0.4.0",
     "grunt-contrib-copy": "~0.5.0",
@@ -34,14 +36,14 @@
     "method-override": "~1.0.0",
     "mongoose": "^4.3.1",
     "morgan": "~1.0.0",
+    "node-mongo-seeds": "^2.2.7",
+    "object-assign": "^4.0.1",
     "q": "~1.0.1",
     "request": "~2.49.0",
     "serve-favicon": "~2.0.1",
     "should": "~3.3.1",
     "supertest": "~0.11.0",
-    "time-grunt": "~0.3.1",
-    "grunt-cli": "*",
-    "bower": "*"
+    "time-grunt": "~0.3.1"
   },
   "devDependencies": {
     "connect-livereload": "~0.4.0"

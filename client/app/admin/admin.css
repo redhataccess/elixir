@@ -1,0 +1,179 @@
+body {
+    color: #4c4c4c;
+}
+
+/* remove halo blue effect around buttons */
+a:active,
+a:focus {
+    -webkit-appearance:none !important;
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border-color: none !important;
+    outline:0px !important;
+}
+
+.workstream-name-col {
+    width: 200px;
+}
+
+.workstream-color-col {
+    width: 50px;
+}
+
+.workstream-state-col {
+    width: 70px;
+}
+
+.workstream-delete-col {
+    width: 20px;
+}
+
+ul.tasks {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+
+ul.tasks li {
+    position: relative;
+}
+
+ul.tasks li:before {
+    content: "";
+    border-color: transparent #9a9a9a;
+    border-style: solid;
+    border-width: 4px 0 4px 4px;
+    display: inline-block;
+    height: 0;
+    width: 0;
+    margin-right: 6px;
+    vertical-align: middle;
+    top: -1px;
+    position: relative;
+}
+
+ul.tasks li a {
+    padding: 0px 3px;
+    text-decoration: none;
+}
+
+.add-task-btn {
+    display: block;
+    margin: 6px 0 6px 10px;
+    cursor: pointer;
+}
+
+.modal-content {
+    border-radius: 0px;
+}
+
+.red {
+    color: red;
+}
+
+.task-delete-confirm {
+    display: none;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    background-color: #eeeff0;
+    padding: 1px 5px;
+    width: 100%;
+}
+
+.workstrem-delete-confirm {
+    display: none;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    background-color: red;
+    padding: 10px;
+    z-index: 999;
+    background-color: #eeeff0;
+}
+
+.workstrams-table td {
+    position: relative;
+}
+
+.elixir-home {
+    padding: 10px 0px;
+}
+
+.btn-elixir-home {
+    background: #4c4c4c;
+    border-color: #4c4c4c;
+}
+
+.btn-elixir-home,
+.btn-elixir-home:link,
+.btn-elixir-home:visited {
+    color: #fff;
+}
+
+.btn-elixir-home:hover,
+.btn-elixir-home:focus {
+    color: #fff;
+    background: #3f3f3f;
+    border-color: #3f3f3f;
+}
+
+.workstream-name a {
+    text-decoration: none;
+}
+
+.full-width {
+    width: 100%;
+}
+
+#addEdditTaskModal .row {
+    margin:0px 30px;
+}
+
+/**
+ * Switch-style checkboxes.
+ */
+.state input[type="checkbox"]:not(:checked),
+.state input[type="checkbox"]:checked { /* :checked here acting as a filter for older browsers */
+    position: absolute;
+    opacity: 0;
+    width: 0px;
+}
+
+.state input[type=checkbox].switch+div {
+    width: 1.8em;
+    height: 1em;
+    border-radius: 999px;
+    margin: 0 auto;
+    background: #acacac;
+    background-origin: border-box;
+    background-clip: border-box;
+    transition-duration: .4s;
+    transition-property:padding,width;
+}
+
+.state input[type="checkbox"].switch:checked + div {
+    padding-left: .8em;
+    width: 1.8em;
+    background-color: #337AB7;
+}
+
+.state input[type=checkbox].switch+div:before {
+    content: "";
+    display: block;
+    width: 1.2em;
+    height: 1.2em;
+    margin: 0;
+    border: 1px solid #646464;
+    border-radius: inherit;
+    background: #fafafa;
+    position: relative;
+    top: -0.1em;
+}
+
+.state input[type="checkbox"].switch:active + div:before {
+    background-color: #aaa;
+}

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('elixirApp')
-.controller('MainCtrl', function ($scope, $q, $log, $location, $routeParams, Tasks, DateRange, GetTimespan, $rootScope, WorkStreamsData) {
+.controller('MainCtrl', ['$scope', '$q', '$log', '$location', '$routeParams', 'Tasks', 'DateRange', 'GetTimespan', '$rootScope', function ($scope, $q, $log, $location, $routeParams, Tasks, DateRange, GetTimespan, $rootScope) {
 
     $scope.timespan = [
         { title: 'Month', value: 'M' },
@@ -237,4 +237,4 @@ angular.module('elixirApp')
 
     init();
 
-});
+}]);
