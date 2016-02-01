@@ -139,7 +139,7 @@
                   </div>
                 </a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                  <datetimepicker data-ng-model="startDate" data-datetimepicker-config="{ startView:'day', minView:'day',  dropdownSelector: '#dropdown1' }"/>
+                  <datetimepicker data-ng-model="startDate" data-on-set-time="onTimeSetEndStartDate(newDate, oldDate)" data-datetimepicker-config="{ startView:'day', minView:'day',  dropdownSelector: '#dropdown1' }"/>
                 </ul>
               </div>
             </div>
@@ -153,7 +153,7 @@
                   </div>
                 </a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                  <datetimepicker data-ng-model="endDevDate" data-datetimepicker-config="{ startView:'day', minView:'day',  dropdownSelector: '#dropdown2' }"/>
+                  <datetimepicker data-ng-model="endDevDate" data-on-set-time="onTimeSetEndDevDate(newDate, oldDate)" data-datetimepicker-config="{ startView:'day', minView:'day',  dropdownSelector: '#dropdown2' }"/>
                 </ul>
               </div>
             </div>
@@ -167,7 +167,7 @@
                   </div>
                 </a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                  <datetimepicker data-ng-model="releaseDate" data-datetimepicker-config="{ startView:'day', minView:'day',  dropdownSelector: '#dropdown3' }"/>
+                  <datetimepicker data-ng-model="releaseDate" data-on-set-time="onTimeSetReleaseDate(newDate, oldDate)" data-datetimepicker-config="{ startView:'day', minView:'day',  dropdownSelector: '#dropdown3' }"/>
                 </ul>
               </div>
             </div>

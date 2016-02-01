@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('elixirApp')
-.controller('WorkstreamIndexController', ['$scope', 'Workstream', 'Task', function($scope, Workstream, Task) {
+.controller('WorkstreamIndexController', ['$scope', 'Workstream', 'Task', '$filter', function($scope, Workstream, Task, $filter) {
 
     // workstream form init
     $scope.showNewWorkstreamLink = true;
@@ -17,6 +17,18 @@ angular.module('elixirApp')
 
     $scope.setCurrentWorkstreamId = function(id) {
         $scope.currentWorkstreamId = id;
+    };
+
+    $scope.onTimeSetEndStartDate = function(newDate, oldDate) {
+        $scope.startDate = $filter('date')(newDate, "yyyy-MM-dd");
+    };
+
+    $scope.onTimeSetEndDevDate = function(newDate, oldDate) {
+        $scope.endDevDate = $filter('date')(newDate, "yyyy-MM-dd");
+    };
+
+    $scope.onTimeSetReleaseDate = function(newDate, oldDate) {
+        $scope.releaseDate = $filter('date')(newDate, "yyyy-MM-dd");
     };
 
     $scope.modalCustomization = function(str, id) {
