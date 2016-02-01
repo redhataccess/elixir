@@ -5,13 +5,15 @@ angular.module('elixirApp')
 
     $scope.timespan = [
         { title: 'Month', value: 'M' },
-        { title: 'Quarter', value: 'Q' },
+        //{ title: 'Quarter', value: 'Q' },
+        { title: 'Quarter', value: 'FQ' }, // we renamed Fiscal quarter to Quarter
         { title: 'Fiscal year', value: 'FY' },
         { title: 'Calendar year', value: 'y' }
+
     ];
     $scope.loading = true;
-    // Set default timespan to Quarter
-    $scope.timeScale = 'Q';
+    // Set default timespan to Fiscal Quarter
+    $scope.timeScale = 'FQ';
 
     $scope.tasksInRange = [];
 
@@ -43,20 +45,29 @@ angular.module('elixirApp')
     $scope.scaleChanged = function () {
 
         if( $scope.timeScale === 'M') {
-            $scope.startDate = GetTimespan.getFirstLastDaysOfMonth($scope.startDate).firstDay;
-            $scope.endDate = GetTimespan.getFirstLastDaysOfMonth($scope.startDate).lastDay;
+            var firstLastDaysOfMonth = GetTimespan.getFirstLastDaysOfMonth($scope.startDate);
+            $scope.startDate = firstLastDaysOfMonth.firstDay;
+            $scope.endDate = firstLastDaysOfMonth.lastDay;
+
+        } else if ( $scope.timeScale === 'FQ') {
+            var firstLastDaysOfFiscalQuarter = GetTimespan.getFirstLastDaysOfFiscalQuarter($scope.startDate);
+            $scope.startDate = firstLastDaysOfFiscalQuarter.firstDay;
+            $scope.endDate = firstLastDaysOfFiscalQuarter.lastDay;
 
         } else if ( $scope.timeScale === 'Q') {
-            $scope.startDate = GetTimespan.getFirstLastDaysOfFiscalQuarter($scope.startDate).firstDay;
-            $scope.endDate = GetTimespan.getFirstLastDaysOfFiscalQuarter($scope.startDate).lastDay;
+            var firstLastDaysOfQuarter = GetTimespan.getFirstLastDaysOfQuarter($scope.startDate);
+            $scope.startDate = firstLastDaysOfQuarter.firstDay;
+            $scope.endDate = firstLastDaysOfQuarter.lastDay;
 
         } else if ( $scope.timeScale === 'FY') {
-            $scope.startDate = GetTimespan.getFirstLastDaysOfFiscalYear($scope.endDate).firstDay;
-            $scope.endDate = GetTimespan.getFirstLastDaysOfFiscalYear($scope.endDate).lastDay;
+            var firstLastDaysOfFiscalYear = GetTimespan.getFirstLastDaysOfFiscalYear($scope.endDate);
+            $scope.startDate = firstLastDaysOfFiscalYear.firstDay;
+            $scope.endDate = firstLastDaysOfFiscalYear.lastDay;
 
-        } else {
-            $scope.startDate = GetTimespan.getFirstLastDaysOfYear($scope.startDate).firstDay;
-            $scope.endDate = GetTimespan.getFirstLastDaysOfYear($scope.startDate).lastDay;
+        } else if ( $scope.timeScale === 'y') {
+            var firstLastDaysOfYear = GetTimespan.getFirstLastDaysOfYear($scope.startDate);
+            $scope.startDate = firstLastDaysOfYear.firstDay;
+            $scope.endDate = firstLastDaysOfYear.lastDay;
         }
 
         $location.search('timeScale', $scope.timeScale);
@@ -68,6 +79,10 @@ angular.module('elixirApp')
         if (!n) { n = 1; }
         if (timeScale === 'FY') {
             timeScale = 'y';
+        }
+
+        if (timeScale === 'FQ') {
+            timeScale = 'Q';
         }
 
         $scope.startDate = moment($scope.startDate).subtract( n , timeScale);
@@ -82,6 +97,10 @@ angular.module('elixirApp')
             timeScale = 'y';
         }
 
+        if (timeScale === 'FQ') {
+            timeScale = 'Q';
+        }
+
         $scope.startDate = moment($scope.startDate).add( n , timeScale);
         $scope.endDate = moment($scope.endDate).add( n , timeScale);
 
@@ -94,6 +113,10 @@ angular.module('elixirApp')
             timeScale = 'y';
         }
 
+        if (timeScale === 'FQ') {
+            timeScale = 'Q';
+        }
+
         $scope.startDate = moment($scope.startDate).subtract( 1 , timeScale);
         $scope.endDate = moment($scope.endDate).add( 1 , timeScale);
 
@@ -104,6 +127,10 @@ angular.module('elixirApp')
 
         if (timeScale === 'FY') {
             timeScale = 'y';
+        }
+
+        if (timeScale === 'FQ') {
+            timeScale = 'Q';
         }
 
         var newStart = moment($scope.startDate).add( 1 , timeScale),
@@ -120,22 +147,32 @@ angular.module('elixirApp')
     };
 
     $scope.today = function () {
+
         var date = moment();
         if( $scope.timeScale === 'M') {
-            $scope.startDate = GetTimespan.getFirstLastDaysOfMonth(date).firstDay;
-            $scope.endDate = GetTimespan.getFirstLastDaysOfMonth(date).lastDay;
+            var firstLastDaysOfMonth = GetTimespan.getFirstLastDaysOfMonth(date);
+            $scope.startDate = firstLastDaysOfMonth.firstDay;
+            $scope.endDate = firstLastDaysOfMonth.lastDay;
+
+        } else if ( $scope.timeScale === 'FQ') {
+            var firstLastDaysOfFiscalQuarter = GetTimespan.getFirstLastDaysOfFiscalQuarter(date);
+            $scope.startDate = firstLastDaysOfFiscalQuarter.firstDay;
+            $scope.endDate = firstLastDaysOfFiscalQuarter.lastDay;
 
         } else if ( $scope.timeScale === 'Q') {
-            $scope.startDate = GetTimespan.getFirstLastDaysOfFiscalQuarter(date).firstDay;
-            $scope.endDate = GetTimespan.getFirstLastDaysOfFiscalQuarter(date).lastDay;
+            var firstLastDaysOfQuarter = GetTimespan.getFirstLastDaysOfQuarter(date);
+            $scope.startDate = firstLastDaysOfQuarter.firstDay;
+            $scope.endDate = firstLastDaysOfQuarter.lastDay;
 
         } else if ( $scope.timeScale === 'FY') {
-            $scope.startDate = GetTimespan.getFirstLastDaysOfFiscalYear(date).firstDay;
-            $scope.endDate = GetTimespan.getFirstLastDaysOfFiscalYear(date).lastDay;
+            var firstLastDaysOfFiscalYear = GetTimespan.getFirstLastDaysOfFiscalYear(date);
+            $scope.startDate = firstLastDaysOfFiscalYear.firstDay;
+            $scope.endDate = firstLastDaysOfFiscalYear.lastDay;
 
-        } else {
-            $scope.startDate = GetTimespan.getFirstLastDaysOfYear(date).firstDay;
-            $scope.endDate = GetTimespan.getFirstLastDaysOfYear(date).lastDay;
+        } else if ( $scope.timeScale === 'y') {
+            var firstLastDaysOfYear = GetTimespan.getFirstLastDaysOfYear(date);
+            $scope.startDate = firstLastDaysOfYear.firstDay;
+            $scope.endDate = firstLastDaysOfYear.lastDay;
         }
 
         reset();
