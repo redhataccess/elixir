@@ -144,7 +144,7 @@ angular.module('elixirApp')
                 '<div class="task-info-arrow" ng-class="direction"></div>' +
                 '<div class="task-info-inner ng-binding">' +
                     '<h5>{{task.title}}</h5>' +
-                    '<b>Start:</b> {{task.startDate}}<br><b>Finish:</b> {{task.endDevDate}}<br><b>Release:</b> {{task.releaseDate}}' +
+                    '<b>Start:</b> {{task.startDate | date:"yyyy-MM-dd" }}<br><b>Finish:</b> {{task.endDevDate | date:"yyyy-MM-dd"}}<br><b>Release:</b> {{task.releaseDate | date:"yyyy-MM-dd"}}' +
                     '<br>{{task.description}}' +
                 '</div>' +
             '</div>',
