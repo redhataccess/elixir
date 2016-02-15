@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('elixirApp')
-.directive('tasksList', function ($window, DateRange) {
+.directive('tasksList', ['$window', 'DateRange' ,function ($window, DateRange) {
     return {
         restrict: 'A',
         scope: {
@@ -135,7 +135,7 @@ angular.module('elixirApp')
             scope.$on('rangeChanged', refresh);
         }
     };
-})
+}])
 .directive('taskInfo', function () {
     return {
         restrict: 'E',
@@ -144,7 +144,7 @@ angular.module('elixirApp')
                 '<div class="task-info-arrow" ng-class="direction"></div>' +
                 '<div class="task-info-inner ng-binding">' +
                     '<h5>{{task.title}}</h5>' +
-                    '<b>Start:</b> {{task.startDate}}<br><b>Finish:</b> {{task.endDevDate}}<br><b>Release:</b> {{task.releaseDate}}' +
+                    '<b>Start:</b> {{task.startDate | date:"yyyy-MM-dd" }}<br><b>Finish:</b> {{task.endDevDate | date:"yyyy-MM-dd"}}<br><b>Release:</b> {{task.releaseDate | date:"yyyy-MM-dd"}}' +
                     '<br>{{task.description}}' +
                 '</div>' +
             '</div>',
@@ -189,7 +189,7 @@ angular.module('elixirApp')
         }
     };
 })
-.directive('timelineHeader', function ($window, DateRange) {
+.directive('timelineHeader', ['$window', 'DateRange' ,function ($window, DateRange) {
     return {
         restrict: 'A',
         template:
@@ -214,8 +214,8 @@ angular.module('elixirApp')
             scope.$on('rangeChanged', refresh);
         }
     };
-})
-.directive('timelineGrid', function ($window, DateRange) {
+}])
+.directive('timelineGrid', ['$window', 'DateRange' ,function ($window, DateRange) {
     return {
         restrict: 'A',
         link: function (scope, element) {
@@ -240,8 +240,8 @@ angular.module('elixirApp')
             scope.$on('rangeChanged', refresh);
         }
     };
-})
-.directive('today', function ($window, DateRange) {
+}])
+.directive('today', [ '$window', 'DateRange',function ($window, DateRange) {
     return {
         restrict: 'A',
         link: function (scope, element) {
@@ -269,7 +269,7 @@ angular.module('elixirApp')
             scope.$on('rangeChanged', refresh);
         }
     };
-})
+}])
 
 /*
  * handle the drag of the timeline which will call shiftBack
@@ -281,7 +281,7 @@ angular.module('elixirApp')
  * params for startDate and endDate. when the user is done
  * dragging, we'll then update the query string start and end dates.
  */
-.directive('headerDrag', function ($swipe) {
+.directive('headerDrag', ['$swipe' ,function ($swipe) {
     return {
         restrict: 'A',
         link: function (scope, ele) {
@@ -306,4 +306,4 @@ angular.module('elixirApp')
             });
         }
     };
-});
+}]);

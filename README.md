@@ -7,17 +7,26 @@ An app for visualizing major milestones of different projects (start, finish and
 The app is full-stack javascript app and is scafolded with generator-angular-fullstack.
 
 ## Install
+
 1. Clone the repository
 2. Then 'cd elixir'
 3. Then 'npm install'
 4. then 'bower install'
 5. finally 'grunt serve'
 
-your browser will be opened and you can see app running on 'http://localhost:9000/#/'
+your browser will be opened and you can see app running on 'http://localhost:9000'
 
-You can find sample json task files in -> client/files
+## Data Administration
+go to:
+http://localhost:9000/admin
+to add workstream ans tasks
+--
 
 ## Build
 Run -> grunt build
 
 Build will be created in dist folder
+
+## Seed
+run seed command in your terminal to populate mongoDb with sample data
+

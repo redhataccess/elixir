@@ -52,15 +52,11 @@ module.exports = function (grunt) {
     },
     watch: {
       injectJS: {
-        files: [
-          '<%= yeoman.client %>/app/**/*.js',
-          '!<%= yeoman.client %>/app/app.js'],
+        files: ['<%= yeoman.client %>/app/**/*.js'],
         tasks: ['injector:scripts']
       },
       injectCss: {
-        files: [
-          '<%= yeoman.client %>/app/**/*.css'
-        ],
+        files: [ '<%= yeoman.client %>/app/**/*.css'],
         tasks: ['injector:css']
       },
       gruntfile: {
@@ -210,17 +206,6 @@ module.exports = function (grunt) {
       }
     },
 
-    svgmin: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.client %>/assets/images',
-          src: '{,*/}*.svg',
-          dest: '<%= yeoman.dist %>/public/assets/images'
-        }]
-      }
-    },
-
     // Allow the use of non-minsafe AngularJS files. Automatically makes it
     // minsafe compatible so Uglify does not destroy the ng references
     ngAnnotate: {
@@ -233,6 +218,7 @@ module.exports = function (grunt) {
         }]
       }
     },
+
     // Copies remaining files to places other tasks can use
     copy: {
       dist: {
@@ -246,10 +232,16 @@ module.exports = function (grunt) {
             '.htaccess',
             'assets/**/*',
             'fonts/*',
-            'files/*',
             'index.html',
-            'app/main/main.html'
+            'app/main/main.html',
+            'app/admin/views/index.html'
           ]
+        }, {
+            expand: true,
+            dot: true,
+            cwd: '<%= yeoman.client %>/bower_components/font-awesome/fonts',
+            src: ['*.*'],
+            dest: '<%= yeoman.dist %>/public/fonts'
         }, {
           expand: true,
           cwd: '.tmp/images',
@@ -299,8 +291,7 @@ module.exports = function (grunt) {
         },
         files: {
           '<%= yeoman.client %>/index.html': [
-              ['{.tmp,<%= yeoman.client %>}/app/**/*.js',
-               '!{.tmp,<%= yeoman.client %>}/app/app.js']
+              '<%= yeoman.client %>}/app/**/*.js'
             ]
         }
       },
@@ -384,5 +375,4 @@ module.exports = function (grunt) {
     'rev',
     'usemin'
   ]);
-
 };

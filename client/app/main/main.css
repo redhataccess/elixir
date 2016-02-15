@@ -375,10 +375,11 @@ label {
 }
 
 .today {
-    margin-top: -40px;
+    position: fixed !important;
+    margin-top: 120px;
     background-color: #0fbaf2;
     width: 3px;
-    z-index: 500;
+    z-index: 90000;
 }
 
 .today:before {

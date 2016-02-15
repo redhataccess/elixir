@@ -12,6 +12,7 @@ router.post('/:workstream', controller.updateWorkstream);
 router.delete('/:workstream', controller.delete);
 router.get('/:workstream/tasks', controller.getWorkstreamTasks);
 router.post('/:workstream/tasks', controller.saveWorkstreamTask);
+router.get('/:workstream/tasks/:task', controller.getWorkstreamTask);
 router.post('/:workstream/tasks/:task', controller.updateWorkstreamTask);
 router.delete('/:workstream/tasks/:task', controller.deleteWorkstreamTask);
 
