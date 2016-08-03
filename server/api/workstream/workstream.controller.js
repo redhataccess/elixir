@@ -39,6 +39,9 @@ exports.delete = function (req, res) {
 };
 
 exports.updateWorkstream = function (req, res) {
+    delete req.body.__v;
+    delete req.body._id;
+
     Workstream.update(req.params.workstream, req.body, function (err, workstream) {
         if (err) {
             return res.status(400).json(err);
