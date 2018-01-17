@@ -4,7 +4,7 @@
   "directory": "/client/",
   "dependencies": {
     "jquery": "~1.11.0",
-    "angular": "~1.4.x",
+    "angular": "1.4.14",
     "json3": "~3.3.1",
     "es5-shim": "~3.0.1",
     "angular-cookies": "~1.4.x",
