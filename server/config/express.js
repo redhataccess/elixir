@@ -41,4 +41,6 @@ module.exports = function(app) {
     app.use(morgan('dev'));
     app.use(errorHandler()); // Error handler - has to be last
   }
+
+  app.use(express.static(path.join(__dirname, '../../node_modules')));
 };

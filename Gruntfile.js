@@ -26,7 +26,7 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('package.json'),
     yeoman: {
       // configurable paths
-      client: require('./bower.json').appPath || 'client',
+      client: 'client',
       dist: 'dist'
     },
     express: {
@@ -239,7 +239,7 @@ module.exports = function (grunt) {
         }, {
             expand: true,
             dot: true,
-            cwd: '<%= yeoman.client %>/bower_components/font-awesome/fonts',
+            cwd: 'node_modules/font-awesome/fonts',
             src: ['*.*'],
             dest: '<%= yeoman.dist %>/public/fonts'
         }, {

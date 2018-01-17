@@ -28,13 +28,6 @@ test/coverage/
 server/populate.js
 
 # --------------------
-# Bower Files
-# --------------------
-client/bower_components/
-.bower-cache/
-.bower-registry/
-
-# --------------------
 # Build Files
 # --------------------
 dist/
