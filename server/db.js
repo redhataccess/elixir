@@ -1,8 +1,9 @@
 var mongoose = require('mongoose');
 var mongoUrl;
 
-if (process.env.OPENSHIFT_MONGODB_DB_URL) {
+if (process.env.NODE_ENV === 'production') {
     mongoUrl = process.env.OPENSHIFT_MONGODB_DB_URL + 'elixir';
+    mongoUrl = 'mongodb://' + process.env.MONGODB_USER + ':' + process.env.MONGODB_PASSWORD + '@' + process.env.MONGODB_IP + ':' + process.env.MONGODB_PORT + '/' + process.env.MONGODB_DATABASE;
 } else {
     mongoUrl = 'mongodb://localhost:27017/elixir';
 }
