@@ -1,7 +1,6 @@
 'use strict';
 
 angular.module('elixirApp', [
-  'ngCookies',
   'ngSanitize',
   'ngRoute',
   'ngTouch',
