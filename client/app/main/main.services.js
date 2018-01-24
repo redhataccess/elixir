@@ -222,10 +222,10 @@ angular.module('elixirApp')
       getWorkStreamsData : function() {
         var deferred = $q.defer();
         $http.get('/api/workstreams')
-          .success(function(result) {
+          .then(function(result) {
             deferred.resolve(result);
           })
-          .error(function(reason){
+          .catch(function(reason){
             deferred.reject(reason);
             $log.error('Request Failed: ', reason);
           });
