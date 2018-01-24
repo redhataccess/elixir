@@ -27,6 +27,7 @@ angular.module('elixirApp')
                 releasePointElem,
                 taskTitleElem,
                 taskLineElem,
+                taskWrapper,
                 startDevPointLeftPosition,
                 endDevPointLeftPosition,
                 releasePointLeftPosition,
@@ -34,14 +35,15 @@ angular.module('elixirApp')
                 taskWidth,
                 lineWidth;
 
-            startDevPointElem = element.find('.start-dev-point');
-            endDevPointElem = element.find('.end-dev-point');
-            releasePointElem = element.find('.release-point');
-            taskTitleElem = element.find('.task-title-wrapper');
-            taskLineElem = element.find('.end-dev-to-release-line');
+            startDevPointElem = element[0].querySelector('.start-dev-point');
+            endDevPointElem = element[0].querySelector('.end-dev-point');
+            releasePointElem = element[0].querySelector('.release-point');
+            taskTitleElem = element[0].querySelector('.task-title-wrapper');
+            taskLineElem = element[0].querySelector('.end-dev-to-release-line');
+            taskWrapper = element[0].querySelector('.task-wrapper');
 
             var positionTaskTextBox = function (taskWidth, left) {
-                taskTitleElem.css({
+                $(taskTitleElem).css({
                     'left': left + 'px',
                     'background-color': color,
                     'width': taskWidth + 'px'
@@ -49,7 +51,7 @@ angular.module('elixirApp')
             };
 
             var positionTaskLine = function (lineWidth, left) {
-                taskLineElem.css({
+                $(taskLineElem).css({
                     'left': left + 'px',
                     'background-color': color,
                     'width': lineWidth + 'px'
@@ -57,21 +59,21 @@ angular.module('elixirApp')
             };
 
             var positionStartPoint = function (startDevPointLeftPosition) {
-                startDevPointElem.css({
+                $(startDevPointElem).css({
                     'border-color': color,
                     'left': startDevPointLeftPosition + 'px'
                 });
             };
 
             var positionEndPoint = function (endDevPointLeftPosition) {
-                endDevPointElem.css({
+                $(endDevPointElem).css({
                     'border-color': color,
                     'left': endDevPointLeftPosition + 'px'
                 });
             };
 
             var positionReleasePoint = function (releasePointLeftPosition) {
-                releasePointElem.css({
+                $(releasePointElem).css({
                     'border-color': color,
                     'background-color': color,
                     'left': releasePointLeftPosition + 'px'
@@ -83,8 +85,8 @@ angular.module('elixirApp')
                 var noDays = DateRange.getNoDays();
                 var columnWidth = $window.innerWidth / noDays;
                 var startDate = DateRange.getStartDate();
-                var $wrapper = element.find('.task-title-wrapper');
-                var $span = element.find('span');
+                var wrapper = $(element[0].querySelector('.task-title-wrapper'));
+                var span = $(element[0].querySelector('span'));
                 var buffer = 10;
 
                 startDevPointLeftPosition = moment(scope.task.startDate).diff(startDate, 'days') * columnWidth;
@@ -101,24 +103,24 @@ angular.module('elixirApp')
                 positionEndPoint(endDevPointLeftPosition);
                 positionReleasePoint(releasePointLeftPosition);
 
-                if ($wrapper.offset().left > 0) {
-                    $span.offset({
+                if (wrapper.offset().left > 0) {
+                    span.offset({
                         left: 'auto'
                     });
                 } else {
-                    if ($wrapper.offset().left + $wrapper.width() < $span.width()) {
-                        $span.offset({
-                            left: $wrapper.offset().left + $wrapper.width() - $span.width() + buffer
+                    if (wrapper.offset().left + wrapper.width() < span.width()) {
+                        span.offset({
+                            left: wrapper.offset().left + wrapper.width() - span.width() + buffer
                         });
                     } else {
-                        $span.offset({
+                        span.offset({
                             left: buffer
                         });
                     }
                 }
             };
 
-            element.find('.task-wrapper').bind('mouseenter', function (event) {
+            taskWrapper.addEventListener('mouseenter', function (event) {
                 scope.$emit('showHint', {
                     element: this,
                     xPos: event.clientX,
@@ -126,7 +128,7 @@ angular.module('elixirApp')
                 });
             });
 
-            element.find('.task-wrapper').bind('mouseleave', function () {
+            taskWrapper.addEventListener('mouseleave', function () {
                 scope.$emit('hideHint');
             });
 
@@ -158,24 +160,25 @@ angular.module('elixirApp')
         },
         link: function (scope, element) {
             scope.$on('showHint', function (event, data) {
-                var $taskWrapper = angular.element(data.element),
-                    $infoArrow = element.find('.task-info-arrow'),
+                var $taskWrapper = $(angular.element(data.element)),
+
+                    $infoArrow = $(element[0].querySelector('.task-info-arrow')),
                     left = data.xPos,
                     buffer = 15,
                     top = $taskWrapper.offset().top + buffer - window.scrollY;
 
-                element.removeClass('hidden');
+                $(element[0]).removeClass('hidden');
 
-                if (top + element.height() > $(window).height()) {
-                    top = $taskWrapper.offset().top - element.outerHeight(true) - buffer - window.scrollY;
+                if (top + $(element[0]).height() > $(window).height()) {
+                    top = $taskWrapper.offset().top - $(element[0]).outerHeight(true) - buffer - window.scrollY;
                     scope.direction = 'bottom';
-                    $infoArrow.css('top', element.outerHeight(true) - buffer);
+                    $infoArrow.css('top', $(element[0]).outerHeight(true) - buffer);
                 } else {
                     scope.direction = 'top';
                     $infoArrow.css('top', 0);
                 }
 
-                element.css({
+                $(element[0]).css({
                     'left': left,
                     'top': top
                 });
@@ -184,7 +187,7 @@ angular.module('elixirApp')
             });
 
             scope.$on('hideHint', function () {
-                element.addClass('hidden');
+                $(element[0]).addClass('hidden');
             });
         }
     };
@@ -208,7 +211,7 @@ angular.module('elixirApp')
                     }
                 }
 
-                element.find('.month').html(inHTML);
+                element[0].querySelector('.month').innerHTML = inHTML;
             };
 
             scope.$on('rangeChanged', refresh);
@@ -233,7 +236,7 @@ angular.module('elixirApp')
                         inHTML = inHTML + '<div style="width: ' + columnWidth + 'px;left: ' + columnWidth * i  + 'px;"></div>';
                     }
                 }
-                element.html(inHTML);
+                element[0].innerHTML = inHTML;
 
             };
 
@@ -263,7 +266,7 @@ angular.module('elixirApp')
                 } else {
                     inHTML = '';
                 }
-                element.html(inHTML);
+                element[0].innerHTML = inHTML;
             };
 
             scope.$on('rangeChanged', refresh);

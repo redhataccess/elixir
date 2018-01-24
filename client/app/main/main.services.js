@@ -82,9 +82,9 @@ angular.module('elixirApp')
         allTasks = [];
 
     // Populate the two array of activeWorkstreams and allTasks
-    var build = function (workstreamList) {
-
-        for( var i = 0, workstreamlenght = workstreamList.length; i < workstreamlenght; i++ ){
+    var build = function (workstreamListData) {
+        var workstreamList = workstreamListData.data;
+        for( var i = 0, workstreamlenght = workstreamList.length; i < workstreamlenght; i++ ) {
             if(workstreamList[i]==undefined || workstreamList[i].tasks==undefined){
                         continue;
             }
