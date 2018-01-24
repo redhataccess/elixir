@@ -78,15 +78,13 @@ exports.saveWorkstreamTask = function (req, res) {
         }
 
         workstream.tasks.push(req.body);
-        var task = workstream.tasks[workstream.tasks.length - 1];
 
-        workstream.save(function (err) {
-            if (err) {
-                return res.status(400).json(err);
-            }
-
+        workstream.save().then(function (task) {
             return res.status(200).json(task);
+        }).catch(function(){
+            return res.status(400).json(err);
         })
+
     });
 };
 
