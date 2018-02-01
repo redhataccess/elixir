@@ -28,7 +28,7 @@ module.exports = function(app) {
 
   if ('production' === env) {
     app.use(express.static(path.join(config.root, 'client')));
-    app.set('appPath', config.root + '/client');
+    app.set('appPath', '/client');
     app.use(morgan('dev'));
   }
 
