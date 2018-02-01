@@ -78,33 +78,10 @@ angular.module('elixirApp')
     var activeWorkstreams = [],
         startDate = DateRange.getStartDate(),
         endDate = DateRange.getEndDate(),
-        tasksInRange = [],
-        allTasks = [];
+        tasksInRange = [];
 
-    // Populate the two array of activeWorkstreams and allTasks
-    var build = function (workstreamListData) {
-        var workstreamList = workstreamListData.data;
-        for( var i = 0, workstreamlenght = workstreamList.length; i < workstreamlenght; i++ ) {
-            if(workstreamList[i]==undefined || workstreamList[i].tasks==undefined){
-                        continue;
-            }
-            var taskLength = workstreamList[i].tasks.length;
-            if( workstreamList[i].active === true ) {
-                var workstream = {};
-                workstream.name = workstreamList[i].name;
-                workstream.color = workstreamList[i].color;
-                activeWorkstreams.push(workstream);
-                for( var j = 0; j < taskLength; j++ ) {
-                    var task = workstreamList[i].tasks[j];
-                    task.color = workstreamList[i].color;
-                    task.workstream = workstreamList[i].name;
-                    allTasks.push(task);
-                }
-            }
-        }
-    };
+    var getTasksInRange = function (startDate, endDate, allTasks) {
 
-    var getTasksInRange = function (startDate, endDate) {
         tasksInRange = [];
 
         //In our date range we want tasks equal and after start date and equal and
@@ -127,17 +104,7 @@ angular.module('elixirApp')
         return tasksInRange;
     };
 
-    function logAndRethrow(error) {
-      $log.error(error);
-      throw error;
-    };
-
-    var ready = WorkStreamsData.getWorkStreamsData().then(function(result) {
-        build(result);
-    }).then(null, logAndRethrow);
-
     return {
-        ready : ready,
         getTasksInRange : getTasksInRange,
         activeWorkstreams : activeWorkstreams
     };

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('elixirApp')
-.controller('MainCtrl', ['$scope', '$q', '$log', '$location', '$routeParams', 'Tasks', 'DateRange', 'GetTimespan', '$rootScope', function ($scope, $q, $log, $location, $routeParams, Tasks, DateRange, GetTimespan, $rootScope) {
+.controller('MainCtrl', ['$scope', '$q', '$log', '$location', '$routeParams', 'Tasks', 'WorkStreamsData', 'DateRange', 'GetTimespan', '$rootScope', function ($scope, $q, $log, $location, $routeParams, Tasks, WorkStreamsData, DateRange, GetTimespan, $rootScope) {
 
     $scope.timespan = [
         { title: 'Month', value: 'M' },
@@ -16,7 +16,7 @@ angular.module('elixirApp')
     $scope.timeScale = 'FQ';
 
     $scope.tasksInRange = [];
-
+    var allTasks = [];
 
     // Get current Quarter
     var startEndDate = GetTimespan.getFirstLastDaysOfFiscalQuarter(moment());
@@ -28,7 +28,7 @@ angular.module('elixirApp')
 
     var reset = function (dontUpdateQueryString) {
         DateRange.resetDates($scope.startDate, $scope.endDate);
-        $scope.tasksInRange = Tasks.getTasksInRange($scope.startDate, $scope.endDate);
+        $scope.tasksInRange = Tasks.getTasksInRange($scope.startDate, $scope.endDate, allTasks);
 
         $scope.$broadcast('rangeChanged');
 
@@ -183,6 +183,7 @@ angular.module('elixirApp')
     });
 
     $scope.toggleAll = function (state) {
+
         $scope.all = state || !$scope.all;
         $scope.addedWorkstreams = ($scope.all) ? $scope.workstreams.map(function (workstream) { return workstream.name; }) : [];
 
@@ -208,50 +209,42 @@ angular.module('elixirApp')
     };
 
     /*
-     * keep an eye on all of the workstreams and update the ws query
-     * string parameter to reflect the selected workstreams
-     */
-    $scope.$watch('addedWorkstreams', function (newValue, oldValue) {
-        if (newValue.length > 0) {
-            $location.search('ws', newValue.join(','));
-        }
-
-        if (newValue.length === 0 && oldValue.length > 0) {
-            $location.search('ws', null);
-        }
-    }, true);
-
-    /*
      * load all of the workstreams then set the state of the application based
      * on the query string parameters. we'll be looking to set the state of the
      * selected workstreams, the timeline and the selected timeline buttons
      */
     var init = function () {
-        Tasks.ready.then(function() {
-            var selectedWorkstreams = 0;
 
-            $scope.workstreams = Tasks.activeWorkstreams;
+        var selectedWorkstreams = 0;
 
-            if ($location.search().startDate) {
-                $scope.startDate = moment(new Date($location.search().startDate));
+        allTasks = [];
+        WorkStreamsData.getWorkStreamsData().then(function(workstreamListData) {
+
+            var activeWorkstreams = [];
+            var workstreamList = workstreamListData.data;
+
+            for( var i = 0, workstreamlenght = workstreamList.length; i < workstreamlenght; i++ ) {
+                if(workstreamList[i] === undefined || workstreamList[i].tasks === undefined) {
+                    continue;
+                }
+
+                var taskLength = workstreamList[i].tasks.length;
+
+                if( workstreamList[i].active === true ) {
+                    var workstream = {};
+                    workstream.name = workstreamList[i].name;
+                    workstream.color = workstreamList[i].color;
+                    activeWorkstreams.push(workstream);
+                    for( var j = 0; j < taskLength; j++ ) {
+                        var task = workstreamList[i].tasks[j];
+                        task.color = workstreamList[i].color;
+                        task.workstream = workstreamList[i].name;
+                        allTasks.push(task);
+                    }
+                }
             }
 
-            if ($location.search().endDate) {
-                $scope.endDate = moment(new Date($location.search().endDate));
-            }
-
-            if ($location.search().timeScale) {
-                $scope.timeScale = $location.search().timeScale;
-            }
-
-            reset();
-
-            // need to call your event handler manually if changing the model programatically
-            //https://docs.angularjs.org/api/ng/directive/ngChange states that
-            //The ngChange expression is only evaluated when a change in the input value causes a new value to be committed to the model.
-            //It will not be evaluated if the model is changed programmatically and not by a change to the input value
-
-            $scope.loading = false;
+            $scope.workstreams = activeWorkstreams;
 
             if ($location.search().ws) {
                 $scope.addedWorkstreams = $location.search().ws.split(',');
@@ -269,9 +262,30 @@ angular.module('elixirApp')
             } else {
                 $scope.toggleAll(true);
             }
+
+            if ($location.search().startDate) {
+                $scope.startDate = moment(new Date($location.search().startDate));
+            }
+
+            if ($location.search().endDate) {
+                $scope.endDate = moment(new Date($location.search().endDate));
+            }
+
+            if ($location.search().timeScale) {
+                $scope.timeScale = $location.search().timeScale;
+            }
+
+            reset();
+
+            $scope.loading = false;
         });
+
     };
 
     init();
+
+    $scope.$on('$locationChangeSuccess', function () {
+        init();
+    });
 
 }]);
